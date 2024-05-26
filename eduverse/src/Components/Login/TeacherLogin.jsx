@@ -1,17 +1,14 @@
 import React, { useState } from "react";
+import img from "../../assets/teacher.png";
 
 export const TeacherLogin = ({ setTeacher }) => {
   const [login, setLogin] = useState(false);
   return (
     <div className="flex gap-0 w-3/4 p-0 rounded-xl h-full shadow-xl m-auto border-2">
-      <div className="w-1/2 bg-[#a5d6f1fc] flex flex-col rounded-l-xl justify-center items-center p-12 gap-20">
+      <div className="w-1/2 bg-[#a5d6f1fc] flex flex-col rounded-l-xl justify-center items-center p-12 gap-16">
         <h1 className="font-bold text-[#857008] text-5xl">EduVerse</h1>
-        <h3>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto
-          quidem eius facilis sit illum qui, nam, unde praesentium est alias
-          officiis assumenda officia iste, tempora animi enim molestiae? Optio,
-          aliquam?
-        </h3>
+
+        <img src={img} alt="" />
         <h3
           className="font-semibold text-xl text-[#857008d0] hover:text-gray-500 transition-all w-3/4 ease-in-out cursor-pointer text-center"
           onClick={() => setTeacher(false)}
