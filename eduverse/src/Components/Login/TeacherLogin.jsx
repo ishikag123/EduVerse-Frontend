@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import img from "../../assets/teacher.png";
+import { AccountContext } from "../../Context/AccountProvider";
 
-export const TeacherLogin = ({ setTeacher }) => {
+export const TeacherLogin = () => {
+  const { teacher, setTeacher, setTeacherLogin, teacherLogin } =
+    useContext(AccountContext);
   const [login, setLogin] = useState(false);
   return (
     <div className="flex gap-0 w-3/4 p-0 rounded-xl h-full shadow-xl m-auto border-2">
@@ -11,7 +14,7 @@ export const TeacherLogin = ({ setTeacher }) => {
         <img src={img} alt="" />
         <h3
           className="font-semibold text-xl text-[#857008d0] hover:text-gray-500 transition-all w-3/4 ease-in-out cursor-pointer text-center"
-          onClick={() => setTeacher(false)}
+          onClick={() => setTeacherLogin(false)}
         >
           Are you a Student?
         </h3>

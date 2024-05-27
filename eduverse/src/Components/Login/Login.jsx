@@ -1,12 +1,15 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { TeacherLogin } from "./TeacherLogin";
 import { studentLogin, studentRegister } from "../../Services/api";
 import img from "../../assets/student.png";
 import { StudentLogout } from "../../Services/Logout";
 import { TestPage } from "../Student/TestPage";
+import { AccountContext } from "../../Context/AccountProvider";
 
 export const Login = () => {
+  const { student, setStudent, teacherLogin, setTeacherLogin } =
+    useContext(AccountContext);
   const [login, setLogin] = useState(false);
   const [teacher, setTeacher] = useState(false);
   const [email, setEmail] = useState("");
@@ -18,23 +21,29 @@ export const Login = () => {
   const [Gname, setGname] = useState("");
   const [Gphone, setGphone] = useState("");
   const [GEmail, setGEmail] = useState("");
-  const [user, setUser] = useState({});
-  const [test, setTest] = useState(false);
+  //const [user, setUser] = useState({});
+  //const [test, setTest] = useState(false);
 
   useEffect(() => {
-    const user1 = JSON.parse(localStorage.getItem("studentToken"));
-    if (user1) {
-      setUser(user1);
+    const user = JSON.parse(localStorage.getItem("studentToken"));
+    if (user) {
+      setStudent(user);
+      window.location.href = "/student-dashboard";
     }
     // const token = localStorage.getItem("studentToken");
     // const user = JSON.parse(atob(token.split(".")[1]));
     // console.log(user._id);
-  }, []);
+  }, [{ student }]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const body = JSON.stringify({ email, password });
     await studentLogin(body);
+    const user = JSON.parse(localStorage.getItem("studentToken"));
+    if (user) {
+      setStudent(user);
+      window.location.href = "/student-dashboard";
+    }
   };
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
@@ -50,13 +59,18 @@ export const Login = () => {
       GEmail,
     });
     await studentRegister(body);
+    const user = JSON.parse(localStorage.getItem("studentToken"));
+    if (user) {
+      setStudent(user);
+      window.location.href = "/student-dashboard";
+    }
   };
   return (
     <div className="flex justify-center items-center h-screen w-full py-6">
-      {teacher ? (
-        // <TeacherLogin setTeacher={setTeacher} />
-        <TestPage token={user.token} />
+      {teacherLogin ? (
+        <TeacherLogin />
       ) : (
+        // <TestPage token={student.token} />
         // {test?()}
         <div className="flex gap-0 w-3/4 p-0 rounded-xl h-full shadow-xl m-auto border-2">
           <div className="w-1/2 bg-[#ffe45bbb] flex flex-col rounded-l-xl justify-center items-center p-12 gap-20">
@@ -64,13 +78,13 @@ export const Login = () => {
             <img src={img} alt="" />
             <h3
               className="font-semibold text-xl text-[#0b5078c0] hover:text-gray-500 transition-all w-3/4 ease-in-out cursor-pointer text-center"
-              onClick={() => setTeacher(true)}
+              onClick={() => setTeacherLogin(true)}
             >
               Are you a Teacher?
             </h3>
-            <h4>{user.email}</h4>
+            {/* <h4>{student.email}</h4> */}
             {/* <h4>{user.token}</h4> */}
-            <button onClick={() => StudentLogout()}>Logout</button>
+            {/* <button onClick={() => StudentLogout()}>Logout</button> */}
           </div>
           <div className="w-3/4 flex flex-col justify-center items-center p-6">
             {login ? (
