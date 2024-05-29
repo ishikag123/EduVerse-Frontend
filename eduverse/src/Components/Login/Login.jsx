@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { TeacherLogin } from "./TeacherLogin";
 import { studentLogin, studentRegister } from "../../Services/api";
 import img from "../../assets/student.png";
-import { StudentLogout } from "../../Services/Logout";
+import { StudentLogout } from "../../Services/utils";
 import { TestPage } from "../Student/TestPage";
 import { AccountContext } from "../../Context/AccountProvider";
 

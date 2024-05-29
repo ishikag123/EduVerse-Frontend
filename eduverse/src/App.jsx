@@ -1,5 +1,5 @@
 import "./App.css";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,9 +10,20 @@ import { Home } from "./Components/Home";
 import { Login } from "./Components/Login/Login";
 import { AccountProvider, AccountContext } from "./Context/AccountProvider";
 import { StudentDashboard } from "./Components/Student/StudentDashboard";
+import { TestPage } from "./Components/Student/TestPage";
+import { setAuthToken } from "./Services/utils";
 
 function App() {
-  const { student } = useContext(AccountContext);
+  const { student, stoken, setSToken, setSMail } = useContext(AccountContext);
+  useEffect(() => {
+    const student = JSON.parse(localStorage.getItem("studentToken"));
+    if (student) {
+      setSToken(student.token);
+      setSMail(student.email);
+      //setAuthToken(stoken);
+    }
+  }, []);
+
   return (
     <>
       {/* <AccountProvider> */}
@@ -24,6 +35,10 @@ function App() {
           <Route
             path="/student-dashboard"
             element={student ? <StudentDashboard /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/test-page"
+            element={student ? <TestPage /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

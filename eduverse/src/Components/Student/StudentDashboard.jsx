@@ -1,23 +1,31 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "../../Context/AccountProvider";
-import { StudentLogout } from "../../Services/Logout";
+import { getStudentToken } from "../../Services/utils";
 import img from "../../assets/profile.jpg";
 import { StudentNav } from "../Navbar/StudentNav";
+import { getStudent, getAllStudents } from "../../Services/api";
 
 export const StudentDashboard = () => {
-  const { student, setStudent } = useContext(AccountContext);
-  const StudentLogout = () => {
-    localStorage.removeItem("studentToken");
-    console.log("student logged out");
-    setStudent(null);
-    //   <Navigate to="/" />;
+  const { stoken, smail } = useContext(AccountContext);
+  //const [stud, setStud] = useState({});
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+
+  const getInfo = async () => {
+    const student = await getStudent(smail, stoken);
+    setName(student.name);
+    setEmail(student.email);
+    setPhone(student.phone);
+    setAddress(student.address);
   };
-  const check = () => {
-    const user = JSON.parse(localStorage.getItem("studentToken"));
-    setStudent(user);
-    console.log(student);
-  };
+
+  useEffect(() => {
+    getInfo();
+  }, []);
+
   return (
     <div className="h-screen w-full flex flex-col">
       <StudentNav />
@@ -30,11 +38,11 @@ export const StudentDashboard = () => {
             alt=""
             className="h-56 w-56 rounded-full shadow-xl mb-12"
           />
-          <h1 className="font-bold text-xl text-gray-600">Name</h1>
-          <h1 className="font-bold text-xl text-gray-600">Phone number</h1>
-          <h1 className="font-bold text-xl text-gray-600">Email id</h1>
-          <h1 className="font-bold text-xl text-gray-600">Address</h1>
-          <h1 className="font-bold text-xl text-gray-600">Joined at</h1>
+
+          <h1 className="font-bold text-xl text-gray-600">{name}</h1>
+          <h1 className="font-bold text-xl text-gray-600">{phone}</h1>
+          <h1 className="font-bold text-xl text-gray-600">{email}</h1>
+          <h1 className="font-bold text-xl text-gray-600">{address}</h1>
         </div>
         <div className="h-full flex flex-col w-2/3 bg-[#ffe45b80] rounded-2xl shadow-xl gap-4 p-8">
           <h1 className="font-bold text-xl text-gray-600">Enrolled Courses</h1>
