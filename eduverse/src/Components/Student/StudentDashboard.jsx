@@ -1,5 +1,9 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
+import { BsFillPersonFill } from "react-icons/bs";
+import { MdLocationOn } from "react-icons/md";
+import { IoMail } from "react-icons/io5";
+import { FaPhoneAlt } from "react-icons/fa";
 import { AccountContext } from "../../Context/AccountProvider";
 import { getStudentToken } from "../../Services/utils";
 import img from "../../assets/profile.jpg";
@@ -7,23 +11,37 @@ import { StudentNav } from "../Navbar/StudentNav";
 import { getStudent, getAllStudents } from "../../Services/api";
 
 export const StudentDashboard = () => {
-  const { stoken, smail } = useContext(AccountContext);
-  //const [stud, setStud] = useState({});
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const { stoken, smail, setStudent, student } = useContext(AccountContext);
+  const [stud, setStud] = useState({});
+  // const [email, setEmail] = useState("");
+  // const [name, setName] = useState("");
+  // const [phone, setPhone] = useState("");
+  // const [address, setAddress] = useState("");
 
-  const getInfo = async () => {
-    const student = await getStudent(smail, stoken);
-    setName(student.name);
-    setEmail(student.email);
-    setPhone(student.phone);
-    setAddress(student.address);
+  const getInfo = async (student) => {
+    const token = student.token;
+    const mail = student.email;
+    try {
+      let student = await getStudent(mail, token);
+      //console.log("response:", student);
+      if (student) {
+        // setName(student.name);
+        // setEmail(student.email);
+        // setPhone(student.phone);
+        // setAddress(student.address);
+        setStud(student);
+      } else {
+        console.error("No student data received");
+      }
+    } catch (error) {
+      console.error("Error fetching student data:", error);
+    }
   };
 
   useEffect(() => {
-    getInfo();
+    const user = getStudentToken();
+    setStudent(user);
+    getInfo(user);
   }, []);
 
   return (
@@ -38,11 +56,21 @@ export const StudentDashboard = () => {
             alt=""
             className="h-56 w-56 rounded-full shadow-xl mb-12"
           />
-
-          <h1 className="font-bold text-xl text-gray-600">{name}</h1>
-          <h1 className="font-bold text-xl text-gray-600">{phone}</h1>
-          <h1 className="font-bold text-xl text-gray-600">{email}</h1>
-          <h1 className="font-bold text-xl text-gray-600">{address}</h1>
+          <div className="flex flex-col gap-4 justify-start items-start">
+            <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
+              <BsFillPersonFill className="text-2xl" /> {stud.name}
+            </div>
+            <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
+              <FaPhoneAlt /> {stud.phone}
+            </div>
+            <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
+              <IoMail />
+              {stud.email}
+            </div>
+            <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
+              <MdLocationOn className="text-2xl" /> {stud.address}
+            </div>
+          </div>
         </div>
         <div className="h-full flex flex-col w-2/3 bg-[#ffe45b80] rounded-2xl shadow-xl gap-4 p-8">
           <h1 className="font-bold text-xl text-gray-600">Enrolled Courses</h1>

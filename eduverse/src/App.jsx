@@ -12,17 +12,18 @@ import { AccountProvider, AccountContext } from "./Context/AccountProvider";
 import { StudentDashboard } from "./Components/Student/StudentDashboard";
 import { TestPage } from "./Components/Student/TestPage";
 import { setAuthToken } from "./Services/utils";
+import { Explore } from "./Components/Student/Explore";
 
 function App() {
   const { student, stoken, setSToken, setSMail } = useContext(AccountContext);
-  useEffect(() => {
-    const student = JSON.parse(localStorage.getItem("studentToken"));
-    if (student) {
-      setSToken(student.token);
-      setSMail(student.email);
-      //setAuthToken(stoken);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const student = JSON.parse(localStorage.getItem("studentToken"));
+  //   if (student) {
+  //     setSToken(student.token);
+  //     setSMail(student.email);
+  //     //setAuthToken(stoken);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -39,6 +40,10 @@ function App() {
           <Route
             path="/test-page"
             element={student ? <TestPage /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/explore"
+            element={student ? <Explore /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>
