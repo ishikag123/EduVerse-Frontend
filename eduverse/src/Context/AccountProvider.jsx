@@ -11,6 +11,8 @@ export const AccountProvider = ({ children }) => {
   const [teacherLogin, setTeacherLogin] = useState(false);
   const [viewTeacher, setViewTeacher] = useState("");
   const [viewCourse, setViewCourse] = useState("");
+  const [CID, setCID] = useState("");
+  const [TID, setTID] = useState("");
 
   return (
     <AccountContext.Provider
@@ -29,6 +31,10 @@ export const AccountProvider = ({ children }) => {
         setViewTeacher,
         viewCourse,
         setViewCourse,
+        CID,
+        setCID,
+        TID,
+        setTID,
       }}
     >
       {children}
