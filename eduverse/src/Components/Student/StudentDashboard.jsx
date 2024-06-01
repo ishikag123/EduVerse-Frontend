@@ -13,10 +13,6 @@ import { getStudent, getAllStudents } from "../../Services/api";
 export const StudentDashboard = () => {
   const { stoken, smail, setStudent, student } = useContext(AccountContext);
   const [stud, setStud] = useState({});
-  // const [email, setEmail] = useState("");
-  // const [name, setName] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [address, setAddress] = useState("");
 
   const getInfo = async (student) => {
     const token = student.token;
@@ -25,10 +21,6 @@ export const StudentDashboard = () => {
       let student = await getStudent(mail, token);
       //console.log("response:", student);
       if (student) {
-        // setName(student.name);
-        // setEmail(student.email);
-        // setPhone(student.phone);
-        // setAddress(student.address);
         setStud(student);
       } else {
         console.error("No student data received");

@@ -14,6 +14,10 @@ export const getStudentToken = () => {
   const user = JSON.parse(localStorage.getItem("studentToken"));
   return user;
 };
+export const getTeacherToken = () => {
+  const user = JSON.parse(localStorage.getItem("teacherToken"));
+  return user;
+};
 
 export const setAuthToken = (token) => {
   if (token) {

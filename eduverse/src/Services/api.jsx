@@ -146,3 +146,66 @@ export const getCourseByTeacher = async (token, id) => {
     console.log(err.response.data);
   }
 };
+
+//////////////////////////TEACHER/////////////////////////////////
+export const teacherRegister = async (data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.post(`${port}/teacher/register`, data, config);
+    //console.log(res.data);
+    localStorage.setItem("teacherToken", JSON.stringify(res.data));
+    //localStorage.setItem("studentToken", res.data.token);
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};
+
+export const teachLogin = async (data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  try {
+    const res = await axios.post(`${port}/teacher/login`, data, config);
+    //console.log(res.data);
+    localStorage.setItem("teacherToken", JSON.stringify(res.data));
+    // localStorage.setItem("studentToken", res.data.token);
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};
+
+export const getTeacher = async (token, id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.get(`${port}/teacher/get-teacher/${id}`, config);
+    return res.data;
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};
+
+export const getMyCourses = async (token, id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.get(`${port}/teacher/get-my-courses/${id}`, config);
+    return res.data;
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};

@@ -13,9 +13,11 @@ import { StudentDashboard } from "./Components/Student/StudentDashboard";
 import { TestPage } from "./Components/Student/TestPage";
 import { setAuthToken } from "./Services/utils";
 import { Explore } from "./Components/Student/Explore";
+import { TeacherDashboard } from "./Components/Teacher/TeacherDashboard";
 
 function App() {
-  const { student, stoken, setSToken, setSMail } = useContext(AccountContext);
+  const { student, stoken, setSToken, setSMail, teacher } =
+    useContext(AccountContext);
   // useEffect(() => {
   //   const student = JSON.parse(localStorage.getItem("studentToken"));
   //   if (student) {
@@ -44,6 +46,10 @@ function App() {
           <Route
             path="/explore"
             element={student ? <Explore /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/teacher-dashboard"
+            element={teacher ? <TeacherDashboard /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

@@ -42,7 +42,7 @@ export const TeacherProfile = ({ teacher, courses }) => {
       </div>
       <div className="h-full flex flex-col w-2/3 bg-[#CDE6F5] rounded-2xl shadow-xl gap-4 p-8">
         <div className="flex">
-          <h1 className="font-bold text-xl mr-auto">Active Courses Courses</h1>
+          <h1 className="font-bold text-xl mr-auto">Active Courses</h1>
           <button onClick={() => setTID("")}>
             <ImCross />
           </button>

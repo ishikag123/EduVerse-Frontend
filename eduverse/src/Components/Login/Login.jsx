@@ -8,10 +8,16 @@ import { TestPage } from "../Student/TestPage";
 import { AccountContext } from "../../Context/AccountProvider";
 
 export const Login = () => {
-  const { student, setStudent, teacherLogin, setTeacherLogin } =
-    useContext(AccountContext);
+  const {
+    student,
+    setStudent,
+    teacherLogin,
+    setTeacherLogin,
+    teacher,
+    setTeacher,
+  } = useContext(AccountContext);
   const [login, setLogin] = useState(false);
-  const [teacher, setTeacher] = useState(false);
+  //const [teacher, setTeacher] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -34,6 +40,23 @@ export const Login = () => {
     // const user = JSON.parse(atob(token.split(".")[1]));
     // console.log(user._id);
   }, [{ student }]);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("teacherToken"));
+    //console.log(user);
+    if (user) {
+      setTeacher(user);
+    }
+    // const token = localStorage.getItem("studentToken");
+    // const user = JSON.parse(atob(token.split(".")[1]));
+    // console.log(user._id);
+  }, []);
+  useEffect(() => {
+    if (teacher) {
+      //console.log("from next", teacher);
+      window.location.href = "/teacher-dashboard";
+    }
+  }, [teacher]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -65,6 +88,7 @@ export const Login = () => {
       window.location.href = "/student-dashboard";
     }
   };
+
   return (
     <div className="flex justify-center items-center h-screen w-full py-6">
       {teacherLogin ? (
