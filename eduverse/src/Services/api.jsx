@@ -209,3 +209,17 @@ export const getMyCourses = async (token, id) => {
     console.log(err.response.data);
   }
 };
+export const createCourse = async (data, token) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.post(`${port}/teacher/create-course`, data, config);
+    console.log(res.data);
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};

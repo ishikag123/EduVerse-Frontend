@@ -14,6 +14,7 @@ import { TestPage } from "./Components/Student/TestPage";
 import { setAuthToken } from "./Services/utils";
 import { Explore } from "./Components/Student/Explore";
 import { TeacherDashboard } from "./Components/Teacher/TeacherDashboard";
+import { CreateCourse } from "./Components/Teacher/CreateCourse";
 
 function App() {
   const { student, stoken, setSToken, setSMail, teacher } =
@@ -50,6 +51,10 @@ function App() {
           <Route
             path="/teacher-dashboard"
             element={teacher ? <TeacherDashboard /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/create-course"
+            element={teacher ? <CreateCourse /> : <Navigate to="/" />}
           />
         </Routes>
       </Router>

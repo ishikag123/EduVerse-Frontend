@@ -1,9 +1,9 @@
 import React from "react";
 import { useContext } from "react";
-import { AccountContext } from "../../Context/AccountProvider";
+import { AccountContext } from "../Context/AccountProvider";
 
 export const CourseOverview = ({ course }) => {
-  const { setCID } = useContext(AccountContext);
+  const { setCID, teacher } = useContext(AccountContext);
   return (
     <div className="h-full w-full flex gap-6 items-center p-6 px-16 mt-20 overflow-auto">
       {course && (
@@ -53,12 +53,28 @@ export const CourseOverview = ({ course }) => {
               <h2>Contact: {course.created_by}</h2>
             </div>
             <div className="w-full flex gap-4">
-              <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
-                Enroll
-              </button>
-              <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
-                Wishlist
-              </button>
+              {teacher ? (
+                <>
+                  <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                    Edit
+                  </button>
+                  <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                    End Course
+                  </button>
+                  <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                    Enrollments
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                    Enroll
+                  </button>
+                  <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                    Wishlist
+                  </button>
+                </>
+              )}
               <button
                 onClick={() => setCID("")}
                 className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75"

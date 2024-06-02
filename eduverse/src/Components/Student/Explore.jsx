@@ -10,7 +10,7 @@ import {
   getCourseByTeacher,
 } from "../../Services/api";
 import { getStudentToken } from "../../Services/utils";
-import { CourseOverview } from "./CourseOverview";
+import { CourseOverview } from "../CourseOverview";
 import { TeacherProfile } from "./TeacherProfile";
 
 export const Explore = () => {
@@ -45,6 +45,7 @@ export const Explore = () => {
     setFilteredCourse(filteredData);
     //console.log(filteredData);
   };
+
   const filterTeacher = () => {
     let filteredData = teachers;
     if (searchTeacher !== "") {
