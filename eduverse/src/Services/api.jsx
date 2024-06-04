@@ -33,7 +33,11 @@ export const studentLogin = async (data) => {
     localStorage.setItem("studentToken", JSON.stringify(res.data));
     // localStorage.setItem("studentToken", res.data.token);
   } catch (error) {
-    console.log(err.response.data);
+    if (error.response && error.response.status === 400) {
+      alert("Wrong credentials!!!");
+    } else {
+      console.log(error.response.data);
+    }
   }
 };
 
@@ -149,6 +153,66 @@ export const getCourseByTeacher = async (token, id) => {
   }
 };
 
+export const getEnrolledCourses = async (token, id) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.get(
+      `${port}/student/enrolled-courses/${id}`,
+      config
+    );
+    return res.data;
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};
+
+export const enrollStudent = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/student/enroll`, data, config);
+    if (res.status === 200) {
+      alert("You are successfully enrolled!!!");
+    } else if (res.status === 400) {
+      alert("Already enrolled!!!");
+    }
+    return res.data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      alert("Already enrolled!!!");
+    } else {
+      console.log(error.response.data);
+    }
+  }
+};
+
+export const unEnrollStudent = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/student/unenroll`, data, config);
+    if (res.status === 200) {
+      alert("You left the course");
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 //////////////////////////TEACHER/////////////////////////////////
 export const teacherRegister = async (data) => {
   const config = {
@@ -179,7 +243,11 @@ export const teachLogin = async (data) => {
     localStorage.setItem("teacherToken", JSON.stringify(res.data));
     // localStorage.setItem("studentToken", res.data.token);
   } catch (error) {
-    console.log(err.response.data);
+    if (error.response && error.response.status === 400) {
+      alert("Wrong credentials!!!");
+    } else {
+      console.log(error.response.data);
+    }
   }
 };
 

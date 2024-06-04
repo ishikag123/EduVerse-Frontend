@@ -248,7 +248,7 @@ export const Explore = () => {
                         </td>
                         <td className="py-2 bg-gray-100 border-2 border-[#4d84d6] px-3 flex gap-2">
                           <button onClick={() => setCID(item._id)}>View</button>
-                          <button>Enroll</button>
+                          {/* <button>Enroll</button> */}
                         </td>
                       </tr>
                     ))}

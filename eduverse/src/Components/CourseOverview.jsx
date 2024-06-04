@@ -1,12 +1,31 @@
 import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "../Context/AccountProvider";
+import { enrollStudent } from "../Services/api";
 
 const cloudName = import.meta.env.VITE_CLOUDNAME;
 
 export const CourseOverview = ({ course }) => {
-  const { setCID, teacher } = useContext(AccountContext);
+  const { setCID, teacher, student, CID } = useContext(AccountContext);
   const [left, setLeft] = useState(0);
+
+  const enroll = async () => {
+    const email = student.email;
+    const cid = CID;
+    const body = JSON.stringify({
+      cid,
+      email,
+    });
+    try {
+      const data = await enrollStudent(student.token, body);
+      if (data) {
+        //console.log(data);
+      } else console.log("not enrolled");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const num = course.joined_students
       ? course.seats - course.joined_students.length
@@ -36,11 +55,12 @@ export const CourseOverview = ({ course }) => {
             </div>
             <h1 className="font-bold text-2xl">Comments</h1>
             <div className="flex flex-col gap-2 ">
-              {course.comment.map((item) => (
-                <div className="w-full p-2 px-4 shadow-md border-2 rounded-2xl">
-                  {item}
-                </div>
-              ))}
+              {course.comment &&
+                course.comment.map((item) => (
+                  <div className="w-full p-2 px-4 shadow-md border-2 rounded-2xl">
+                    {item}
+                  </div>
+                ))}
             </div>
           </div>
 
@@ -70,7 +90,7 @@ export const CourseOverview = ({ course }) => {
               <h2>Contact: {course.created_by}</h2>
             </div>
             <div className="w-full flex gap-4">
-              {teacher ? (
+              {teacher && !student ? (
                 <>
                   <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
                     Edit
@@ -84,7 +104,10 @@ export const CourseOverview = ({ course }) => {
                 </>
               ) : (
                 <>
-                  <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                  <button
+                    className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75"
+                    onClick={() => enroll()}
+                  >
                     Enroll
                   </button>
                   <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
