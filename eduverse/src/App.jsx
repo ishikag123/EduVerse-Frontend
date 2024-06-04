@@ -42,7 +42,7 @@ function App() {
           />
           <Route
             path="/test-page"
-            element={student ? <TestPage /> : <Navigate to="/" />}
+            element={student || teacher ? <TestPage /> : <Navigate to="/" />}
           />
           <Route
             path="/explore"

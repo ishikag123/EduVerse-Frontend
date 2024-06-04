@@ -41,22 +41,25 @@ export const Login = () => {
     // console.log(user._id);
   }, [{ student }]);
 
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("teacherToken"));
+  //   //console.log(user);
+  //   if (user) {
+  //     setTeacher(user);
+  //   }
+  //   // const token = localStorage.getItem("studentToken");
+  //   // const user = JSON.parse(atob(token.split(".")[1]));
+  //   // console.log(user._id);
+  // }, []);
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("teacherToken"));
     //console.log(user);
     if (user) {
       setTeacher(user);
-    }
-    // const token = localStorage.getItem("studentToken");
-    // const user = JSON.parse(atob(token.split(".")[1]));
-    // console.log(user._id);
-  }, []);
-  useEffect(() => {
-    if (teacher) {
-      //console.log("from next", teacher);
       window.location.href = "/teacher-dashboard";
     }
-  }, [teacher]);
+  }, [{ teacher }]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();

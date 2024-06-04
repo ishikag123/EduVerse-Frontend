@@ -1,7 +1,9 @@
 import React from "react";
 import axios from "axios";
 
-const port = "http://localhost:5000";
+const port = import.meta.env.VITE_SERVER;
+const video_url = import.meta.env.VITE_CLOUDINARY_URL;
+const cloudName = import.meta.env.VITE_CLOUDNAME;
 
 export const studentRegister = async (data) => {
   const config = {
@@ -171,6 +173,7 @@ export const teachLogin = async (data) => {
     },
   };
   try {
+    //console.log(port);
     const res = await axios.post(`${port}/teacher/login`, data, config);
     //console.log(res.data);
     localStorage.setItem("teacherToken", JSON.stringify(res.data));
@@ -209,6 +212,7 @@ export const getMyCourses = async (token, id) => {
     console.log(err.response.data);
   }
 };
+
 export const createCourse = async (data, token) => {
   const config = {
     headers: {
@@ -218,8 +222,25 @@ export const createCourse = async (data, token) => {
   };
   try {
     const res = await axios.post(`${port}/teacher/create-course`, data, config);
+    if (res) alert("Course Created!!!");
     console.log(res.data);
   } catch (error) {
     console.log(err.response.data);
+  }
+};
+
+export const uploadVideo = async (data) => {
+  // const data = {};
+  // data.append("file", video);
+  // data.append("upload_preset", "EduVerse_Preset");
+  try {
+    let resourceType = "video";
+    let api = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
+    const res = await axios.post(api, data);
+    const { public_id } = res.data;
+    console.log(public_id);
+    return public_id;
+  } catch (error) {
+    console.log(error);
   }
 };

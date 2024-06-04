@@ -1,18 +1,32 @@
 import React from "react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AccountContext } from "../Context/AccountProvider";
+
+const cloudName = import.meta.env.VITE_CLOUDNAME;
 
 export const CourseOverview = ({ course }) => {
   const { setCID, teacher } = useContext(AccountContext);
+  const [left, setLeft] = useState(0);
+  useEffect(() => {
+    const num = course.joined_students
+      ? course.seats - course.joined_students.length
+      : course.seats;
+    setLeft(num);
+  }, [course]);
+
   return (
     <div className="h-full w-full flex gap-6 items-center p-6 px-16 mt-20 overflow-auto">
       {course && (
         <>
           <div className="flex flex-col w-1/2 h-full p-6 gap-6">
             <iframe
-              src="https://www.youtube.com/embed/Rgx8dpiPwpA"
+              src={`https://player.cloudinary.com/embed/?cloud_name=${cloudName}&public_id=${course.demo}`}
+              width="640"
+              height="360"
+              //style="height: auto; width: 100%; aspect-ratio: 640 / 360;"
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+              allowfullscreen
               frameborder="0"
-              className="rounded-2xl shadow-xl w-full h-3/5"
             ></iframe>
             <div className="flex">
               <h1 className="mr-auto font-bold text-xl">
@@ -41,14 +55,17 @@ export const CourseOverview = ({ course }) => {
               <h2>Class timimg: {course.timing}</h2>
               <h2>Location: {course.location}</h2>
               <h2>Category: {course.category}</h2>
-              <h2>Level: {course.level}</h2>
+              <h2>Who can enroll: {course.level}</h2>
               <h2>Prerequisites: {course.prereq}</h2>
               <h2>Start date: {course.startDate}</h2>
               <h2>End date: {course.endDate}</h2>
               <h2>Enrollment ends: {course.enrollmentLastDate}</h2>
               <h2>Fees: Rs {course.fees}</h2>
-              <h2>Already enrolled: </h2>
-              <h2>Seats left: </h2>
+              <h2>
+                Already enrolled:{" "}
+                {course.joined_students ? course.joined_students.length : 0}
+              </h2>
+              <h2>Seats left :{left}</h2>
               {/* <h1 className="font-bold text-xl">Contact</h1> */}
               <h2>Contact: {course.created_by}</h2>
             </div>

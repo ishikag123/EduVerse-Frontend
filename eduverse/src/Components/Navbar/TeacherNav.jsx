@@ -17,7 +17,7 @@ export const TeacherNav = () => {
       </Link>
       <div className="flex gap-16 ml-auto text-xl font-bold text-[#0B5078] justify-center items-center">
         <Link to="/teacher-dashboard">Dashboard</Link>
-        <Link to="/my-courses">My courses</Link>
+        {/* <Link to="/my-courses">My courses</Link> */}
         <Link to="/create-course">Create course</Link>
         <Link to="/fees-status">Fees status</Link>
         <h3 className="cursor-pointer" onClick={() => TeacherLogout()}>
