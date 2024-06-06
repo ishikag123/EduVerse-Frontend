@@ -213,6 +213,64 @@ export const unEnrollStudent = async (token, data) => {
   }
 };
 
+export const courseComment = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/student/comment`, data, config);
+    return res.data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      alert("Already enrolled!!!");
+    } else {
+      console.log(error.response.data);
+    }
+  }
+};
+
+export const wishlistCourse = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/student/wishlist`, data, config);
+    if (res.status === 200) {
+      alert("You wishlisted this course!!");
+    } else if (res.status === 400) {
+      alert("Already exists in wishlist!!");
+    }
+    return res.data;
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      alert("Already exists in wishlist!!");
+    } else {
+      console.log(error.response.data);
+    }
+  }
+};
+
+export const rateCourse = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/student/rate-course`, data, config);
+    return res.data;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
 //////////////////////////TEACHER/////////////////////////////////
 export const teacherRegister = async (data) => {
   const config = {

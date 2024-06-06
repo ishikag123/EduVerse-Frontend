@@ -39,12 +39,6 @@ export const TeacherDashboard = () => {
     }
   };
 
-  const checkActive = (end) => {
-    const currDate = new Date();
-    const endDate = new Date(end);
-    if (endDate > currDate) return true;
-    else return false;
-  };
   //   const currentDate = new Date();
 
   //   const categorizedCourses = {
