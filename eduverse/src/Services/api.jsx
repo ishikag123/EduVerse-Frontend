@@ -309,6 +309,7 @@ export const removeCourseFromWishlist = async (token, data) => {
 };
 
 //////////////////////////TEACHER/////////////////////////////////
+
 export const teacherRegister = async (data) => {
   const config = {
     headers: {
@@ -405,5 +406,22 @@ export const uploadVideo = async (data) => {
     return public_id;
   } catch (error) {
     console.log(error);
+  }
+};
+
+export const getEnrolledStudent = async (mail, token) => {
+  //const token = data.stoken;
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.get(`${port}/teacher/get-student/${mail}`, config);
+    return res.data;
+  } catch (error) {
+    console.log(err.response.data);
   }
 };

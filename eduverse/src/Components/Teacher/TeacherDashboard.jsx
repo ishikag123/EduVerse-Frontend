@@ -11,12 +11,13 @@ import { getTeacherToken } from "../../Services/utils";
 import { getMyCourses, getTeacher, getCourseByID } from "../../Services/api";
 import { TeacherNav } from "../Navbar/TeacherNav";
 import { CourseOverview } from "../CourseOverview";
+import { Triangle } from "react-loader-spinner";
 
 export const TeacherDashboard = () => {
   const [teacherData, setTeacherData] = useState({});
   const [courseData, setCourseData] = useState([]);
   const [course, setCourse] = useState();
-  const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [avgRating, setAvgRating] = useState(0);
   const [categorizedCourses, setCategorizedCourses] = useState({
     upcoming: [],
@@ -29,9 +30,11 @@ export const TeacherDashboard = () => {
   const viewCourse = async (id) => {
     setCID(id);
     //console.log(id);
+    setLoading(true);
     try {
       const data = await getCourseByID(teacher.token, id);
       if (data) {
+        setLoading(false);
         setCourse(data);
         //console.log(data);
         //console.log("saved in state:", course);
@@ -70,12 +73,14 @@ export const TeacherDashboard = () => {
     setTeacher(user);
     setStudent(null);
     setStudCourse(false);
+    setLoading(true);
     //console.log(user);
     const getTeacherInfo = async (token, id) => {
       try {
         const teacher = await getTeacher(token, id);
         if (teacher) {
           //console.log(teacher);
+          setLoading(false);
           setTeacherData(teacher);
           calculateTeacherRating(teacher);
         } else console.log(`${id} not found`);
@@ -135,7 +140,13 @@ export const TeacherDashboard = () => {
       <TeacherNav />
 
       {CID ? (
-        <CourseOverview course={course} />
+        loading ? (
+          <div className="h-full w-full flex items-center justify-center p-6 px-16 mt-20">
+            <Triangle visible={true} height="80" width="80" color="#31869f" />
+          </div>
+        ) : (
+          <CourseOverview course={course} />
+        )
       ) : (
         <div className="h-full w-full flex gap-4 justify-center items-center p-6 px-16 mt-20">
           <div className="h-full w-1/3 bg-[#0B5078] rounded-2xl shadow-xl flex flex-col justify-center items-center gap-4">
