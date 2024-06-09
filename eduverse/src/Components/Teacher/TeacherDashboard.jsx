@@ -17,12 +17,14 @@ export const TeacherDashboard = () => {
   const [courseData, setCourseData] = useState([]);
   const [course, setCourse] = useState();
   const [active, setActive] = useState(false);
+  const [avgRating, setAvgRating] = useState(0);
   const [categorizedCourses, setCategorizedCourses] = useState({
     upcoming: [],
     active: [],
     inactive: [],
   });
-  const { teacher, setTeacher, CID, setCID } = useContext(AccountContext);
+  const { teacher, setTeacher, CID, setCID, setStudent, setStudCourse } =
+    useContext(AccountContext);
 
   const viewCourse = async (id) => {
     setCID(id);
@@ -46,11 +48,28 @@ export const TeacherDashboard = () => {
   //     active: [],
   //     inactive: [],
   //   };
+  const calculateTeacherRating = (teacher) => {
+    const sum = teacher
+      ? teacher.rating.reduce((acc, curr) => acc + curr, 0)
+      : 0;
+    const average =
+      teacher && teacher.rating.length ? sum / teacher.rating.length : 0;
+    setAvgRating(average.toFixed(1));
+  };
+
+  const calculateRating = (course) => {
+    const sum = course ? course.rating.reduce((acc, curr) => acc + curr, 0) : 0;
+    const average =
+      course && course.rating.length ? sum / course.rating.length : 0;
+    return average.toFixed(1);
+  };
 
   useEffect(() => {
     setCID("");
     const user = getTeacherToken();
     setTeacher(user);
+    setStudent(null);
+    setStudCourse(false);
     //console.log(user);
     const getTeacherInfo = async (token, id) => {
       try {
@@ -58,6 +77,7 @@ export const TeacherDashboard = () => {
         if (teacher) {
           //console.log(teacher);
           setTeacherData(teacher);
+          calculateTeacherRating(teacher);
         } else console.log(`${id} not found`);
       } catch (error) {
         console.log(error);
@@ -67,7 +87,7 @@ export const TeacherDashboard = () => {
       try {
         const course = await getMyCourses(token, id);
         if (course) {
-          //console.log(teacher);
+          //console.log(course);
           setCourseData(course);
         } else console.log(`${id} not found`);
       } catch (error) {
@@ -122,7 +142,7 @@ export const TeacherDashboard = () => {
             <img
               src={img}
               alt=""
-              className="h-56 w-56 rounded-full shadow-xl mb-12"
+              className="h-56 w-56 rounded-full shadow-xl mb-4"
             />
             <div className="flex flex-col gap-4 justify-start items-start">
               <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
@@ -143,10 +163,13 @@ export const TeacherDashboard = () => {
                 <FaGraduationCap /> {teacherData.skills}
               </div>
               <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
-                <FaStarHalfAlt /> {teacherData.rating}
+                <FaStarHalfAlt /> {avgRating}
               </div>
               <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
-                <h1>{teacherData.experience} years of experience</h1>
+                <h1>
+                  {teacherData.experience ? teacherData.experience : 0} years of
+                  experience
+                </h1>
               </div>
             </div>
           </div>
@@ -169,13 +192,13 @@ export const TeacherDashboard = () => {
                           </button>
                           <div className="text-[#0B5078] font-bold  flex gap-1 justify-center items-center">
                             <BsFillPeopleFill />
-                            {courseData.joined_students
-                              ? courseData.joined_students.length
+                            {item.joined_students
+                              ? item.joined_students.length
                               : 0}
                           </div>
                           <div className="text-red-700 font-bold flex gap-1 justify-center items-center">
                             <FaHeart />
-                            {courseData.rating ? courseData.rating : 0}
+                            {calculateRating(item)}
                           </div>
                         </div>
                       </div>
@@ -204,13 +227,13 @@ export const TeacherDashboard = () => {
                           </button>
                           <div className="text-[#0B5078] font-bold  flex gap-1 justify-center items-center">
                             <BsFillPeopleFill />
-                            {courseData.joined_students
-                              ? courseData.joined_students.length
+                            {item.joined_students
+                              ? item.joined_students.length
                               : 0}
                           </div>
                           <div className="text-red-700 font-bold flex gap-1 justify-center items-center">
                             <FaHeart />
-                            {courseData.rating ? courseData.rating : 0}
+                            {calculateRating(item)}
                           </div>
                         </div>
                       </div>
@@ -239,13 +262,13 @@ export const TeacherDashboard = () => {
                           </button>
                           <div className="text-[#0B5078] font-bold  flex gap-1 justify-center items-center">
                             <BsFillPeopleFill />
-                            {courseData.joined_students
-                              ? courseData.joined_students.length
+                            {item.joined_students
+                              ? item.joined_students.length
                               : 0}
                           </div>
                           <div className="text-red-700 font-bold flex gap-1 justify-center items-center">
                             <FaHeart />
-                            {courseData.rating ? courseData.rating : 0}
+                            {calculateRating(item)}
                           </div>
                         </div>
                       </div>

@@ -9,7 +9,7 @@ export const Home = () => {
       <div className="home">
         <div className="text">
           <h1 className="font-bold text-[#0B5078] text-5xl">EduVerse</h1>
-          <h3 className="text-left text-gray-700">
+          <h3 className="text-left text-gray-700 text-lg">
             Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rem
             tempore ipsam mollitia, natus quidem autem quia modi, delectus nisi,
             saepe quis! Aliquid laboriosam asperiores exercitationem minima eum

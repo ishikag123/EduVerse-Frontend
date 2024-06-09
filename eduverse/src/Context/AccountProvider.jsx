@@ -10,7 +10,7 @@ export const AccountProvider = ({ children }) => {
   const [teacher, setTeacher] = useState({});
   const [teacherLogin, setTeacherLogin] = useState(false);
   const [viewTeacher, setViewTeacher] = useState("");
-  const [viewCourse, setViewCourse] = useState("");
+  const [studCourse, setStudCourse] = useState(false);
   const [CID, setCID] = useState("");
   const [TID, setTID] = useState("");
 
@@ -29,8 +29,8 @@ export const AccountProvider = ({ children }) => {
         setSMail,
         viewTeacher,
         setViewTeacher,
-        viewCourse,
-        setViewCourse,
+        studCourse,
+        setStudCourse,
         CID,
         setCID,
         TID,

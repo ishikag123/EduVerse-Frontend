@@ -19,8 +19,8 @@ export const StudentNav = () => {
       <div className="flex gap-16 ml-auto text-xl font-bold text-[#0B5078] justify-center items-center">
         <Link to="/student-dashboard">Dashboard</Link>
         <Link to="/explore">Explore</Link>
-        <Link to="/wishlist">Wishlist</Link>
-        <Link to="/fees-pay">Pay fees</Link>
+        {/* <Link to="/wishlist">Wishlist</Link>
+        <Link to="/fees-pay">Pay fees</Link> */}
         <h1 className="cursor-pointer" onClick={() => StudentLogout()}>
           Logout
         </h1>

@@ -14,22 +14,38 @@ import {
   getEnrolledCourses,
   getCourseByID,
   unEnrollStudent,
+  removeCourseFromWishlist,
 } from "../../Services/api";
 import { CourseOverview } from "../CourseOverview";
+import { MdLogout } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
+import { ImBin } from "react-icons/im";
+import { Triangle } from "react-loader-spinner";
 
 export const StudentDashboard = () => {
-  const { stoken, smail, setStudent, student, CID, setCID } =
-    useContext(AccountContext);
+  const {
+    stoken,
+    smail,
+    setStudent,
+    student,
+    CID,
+    setCID,
+    setTeacher,
+    setStudCourse,
+  } = useContext(AccountContext);
   const [stud, setStud] = useState({});
   const [myCourses, setMyCourses] = useState([]);
   const [course, setCourse] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const viewCourse = async (id) => {
     setCID(id);
     //console.log(id);
+    setLoading(true);
     try {
       const data = await getCourseByID(student.token, id);
       if (data) {
+        setLoading(false);
         setCourse(data);
         //console.log(data);
         //console.log("saved in state:", course);
@@ -61,17 +77,41 @@ export const StudentDashboard = () => {
     }
   };
 
+  const removeFromWishlist = async (id) => {
+    const confirmLeave = window.confirm(
+      "Are you sure you want to remove the course from wishlist?"
+    );
+    if (!confirmLeave) return;
+    const body = {
+      _id: stud._id,
+      cid: id,
+    };
+    try {
+      const data = await removeCourseFromWishlist(student.token, body);
+      // if (data) {
+      //   //console.log(data);
+      // } else console.log("not enrolled");
+      if (data) window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setCID("");
     const user = getStudentToken();
     setStudent(user);
+    setTeacher(null);
+    setStudCourse(true);
     const token = user.token;
     const mail = user.email;
+    setLoading(true);
     const getInfo = async () => {
       try {
         let student = await getStudent(mail, token);
         //console.log("response:", student);
         if (student) {
+          setLoading(false);
           setStud(student);
         } else {
           console.error("No student data received");
@@ -96,7 +136,11 @@ export const StudentDashboard = () => {
   return (
     <div className="h-screen w-full flex flex-col">
       <StudentNav />
-      {CID ? (
+      {loading ? (
+        <div className="h-full w-full flex items-center justify-center p-6 px-16 mt-20">
+          <Triangle visible={true} height="80" width="80" color="#31869f" />
+        </div>
+      ) : CID ? (
         <CourseOverview course={course} />
       ) : (
         <div className="h-full w-full flex gap-4 justify-center items-center p-6 px-16 mt-20">
@@ -124,31 +168,58 @@ export const StudentDashboard = () => {
               </div>
             </div>
           </div>
-          <div className="h-full flex flex-col w-2/3 bg-[#ffe45b80] rounded-2xl shadow-xl gap-4 p-8">
-            <h1 className="font-bold text-xl text-gray-600">
-              Enrolled Courses
-            </h1>
-            <div className="overflow-auto flex flex-col w-full h-full gap-4 p-4">
-              {myCourses &&
-                myCourses.map((item) => (
-                  <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
-                    <h1 className="font-semibold">{item.cname}</h1>
-                    <div className="flex gap-3 justify-center items-center ml-auto">
-                      <button
-                        className=" font-bold text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
-                        onClick={() => viewCourse(item._id)}
-                      >
-                        View
-                      </button>
-                      <button
-                        className="font-bold text-red-600 hover:text-red-400 transition-all ease-in-out"
-                        onClick={() => leaveCourse(item._id)}
-                      >
-                        Leave
-                      </button>
+          <div className="h-full flex w-2/3 bg-[#ffe45b80] rounded-2xl shadow-xl gap-3 p-8">
+            <div className="w-1/2 flex flex-col h-full justify-center items-center">
+              <h1 className="font-bold text-xl text-gray-600">
+                Enrolled Courses
+              </h1>
+              <div className="overflow-auto flex flex-col w-full h-full gap-4 p-4">
+                {myCourses &&
+                  myCourses.map((item) => (
+                    <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+                      <h1 className="font-semibold">{item.cname}</h1>
+                      <div className="flex gap-3 justify-center items-center ml-auto">
+                        <button
+                          className=" font-bold text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
+                          onClick={() => viewCourse(item._id)}
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          className="font-bold text-xl text-red-600 hover:text-red-400 transition-all ease-in-out"
+                          onClick={() => leaveCourse(item._id)}
+                        >
+                          <MdLogout />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
+            </div>
+            <div className="w-1/2 flex flex-col h-full  justify-center items-center">
+              <h1 className="font-bold text-xl text-gray-600">My Wishlist</h1>
+              <div className="overflow-auto flex flex-col w-full h-full gap-4 p-4">
+                {stud.wishlist &&
+                  stud.wishlist.map((item) => (
+                    <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+                      <h1 className="font-semibold">{item.cname}</h1>
+                      <div className="flex gap-3 justify-center items-center ml-auto">
+                        <button
+                          className=" font-bold text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
+                          onClick={() => viewCourse(item.cid)}
+                        >
+                          <FaEye />
+                        </button>
+                        <button
+                          className="font-bold  text-red-600 hover:text-red-400 transition-all ease-in-out"
+                          onClick={() => removeFromWishlist(item.cid)}
+                        >
+                          <ImBin />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>

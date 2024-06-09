@@ -271,6 +271,43 @@ export const rateCourse = async (token, data) => {
   }
 };
 
+export const rateTeacher = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/student/rate-teacher`, data, config);
+    return res.data;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
+export const removeCourseFromWishlist = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(
+      `${port}/student/remove-from-wishlist`,
+      data,
+      config
+    );
+    if (res.status === 200) {
+      alert("Course was removed from wishlist!!");
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error.response.data);
+  }
+};
+
 //////////////////////////TEACHER/////////////////////////////////
 export const teacherRegister = async (data) => {
   const config = {

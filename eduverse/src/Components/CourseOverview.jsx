@@ -14,7 +14,8 @@ import { formatDate } from "../Services/utils";
 const cloudName = import.meta.env.VITE_CLOUDNAME;
 
 export const CourseOverview = ({ course }) => {
-  const { setCID, teacher, student, CID } = useContext(AccountContext);
+  const { setCID, teacher, student, CID, studCourse } =
+    useContext(AccountContext);
   const [left, setLeft] = useState(0);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
@@ -88,6 +89,7 @@ export const CourseOverview = ({ course }) => {
       setEndDate(formatDate(course.endDate));
       setEnrollDate(formatDate(course.enrollmentLastDate));
     }
+    //console.log(student);
   }, [course]);
 
   const ratingChanged = (newRating) => {
@@ -115,7 +117,8 @@ export const CourseOverview = ({ course }) => {
 
   const calculateRating = () => {
     const sum = course ? course.rating.reduce((acc, curr) => acc + curr, 0) : 0;
-    const average = course ? sum / course.rating.length : 0;
+    const average =
+      course && course.rating.length ? sum / course.rating.length : 0;
     setAvgRating(average.toFixed(1));
   };
 
@@ -156,30 +159,39 @@ export const CourseOverview = ({ course }) => {
                   {avgRating}
                 </h1>
               </div>
-              <ReactStars
-                count={5}
-                onChange={ratingChanged}
-                size={32}
-                activeColor="#ffd700"
-              />
+              {studCourse ? (
+                <ReactStars
+                  count={5}
+                  onChange={ratingChanged}
+                  size={32}
+                  activeColor="#ffd700"
+                />
+              ) : (
+                <></>
+              )}
             </div>
             <h1 className="font-bold text-2xl">Comments</h1>
+
             <div className="flex flex-col gap-4 w-full justify-center items-center">
-              <form
-                action=""
-                onSubmit={submitComment}
-                className="flex gap-4 w-full justify-center items-center"
-              >
-                <input
-                  type="text"
-                  className="w-full p-2 px-4 border-2 shadow-md rounded-xl"
-                  onChange={(e) => setComment(e.target.value)}
-                  placeholder="Comment..."
-                />
-                <button>
-                  <IoSend />
-                </button>
-              </form>
+              {studCourse ? (
+                <form
+                  action=""
+                  onSubmit={submitComment}
+                  className="flex gap-4 w-full justify-center items-center"
+                >
+                  <input
+                    type="text"
+                    className="w-full p-2 px-4 border-2 shadow-md rounded-xl"
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Comment..."
+                  />
+                  <button className="hover:text-[#f4d84c] text-2xl transition-all ease-in">
+                    <IoSend />
+                  </button>
+                </form>
+              ) : (
+                <></>
+              )}
               {comments &&
                 comments.map((item) => (
                   <div className="w-full p-2 px-4 shadow-md border-2 rounded-xl">
@@ -215,14 +227,14 @@ export const CourseOverview = ({ course }) => {
               <h2>Contact: {course.created_by}</h2>
             </div>
             <div className="w-full flex gap-4">
-              {teacher && !student ? (
+              {!studCourse ? (
                 <>
                   <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
                     Edit
                   </button>
-                  <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                  {/* <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
                     End Course
-                  </button>
+                  </button> */}
                   <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
                     Enrollments
                   </button>
