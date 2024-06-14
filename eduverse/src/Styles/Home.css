@@ -4,7 +4,7 @@
   width: 100%;
   height: 100vh;
   display: flex;
-
+  flex-direction: row;
   margin: 0rem 0rem -4rem;
   /* //margin: -1rem -10rem -1rem 0rem; */
   /* padding-right: 1.5rem;
@@ -28,4 +28,25 @@
   /* margin: -1rem -1rem 0rem 0rem; */
   padding: 4rem;
   position: fixed;
+}
+
+@media screen and (max-width: 640px) {
+  .home {
+    flex-direction: column;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+  .text {
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    /* height: 60%; */
+    margin-bottom: auto;
+    gap: 4rem;
+  }
+  .triangle-right {
+    display: none;
+  }
 }

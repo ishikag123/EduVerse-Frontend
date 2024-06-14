@@ -50,19 +50,19 @@ export const TeacherLogin = () => {
     }
   };
   return (
-    <div className="flex gap-0 w-3/4 p-0 rounded-xl h-full shadow-xl m-auto border-2">
-      <div className="w-1/2 bg-[#a5d6f1fc] flex flex-col rounded-l-xl justify-center items-center p-12 gap-16">
+    <div className="flex md:flex-row flex-col gap-0 md:w-3/4 w-11/12 p-0 rounded-xl h-full shadow-xl m-auto border-2 md:bg-transparent overflow-auto bg-[#a5d6f1fc]">
+      <div className="md:w-1/2 w-full md:bg-[#a5d6f1fc] flex flex-col rounded-l-xl justify-center items-center p-12 gap-16">
         <h1 className="font-bold text-[#857008] text-5xl">EduVerse</h1>
 
-        <img src={img} alt="" />
+        <img src={img} alt="" className="md:flex hidden" />
         <h3
-          className="font-semibold text-xl text-[#857008d0] hover:text-gray-500 transition-all w-3/4 ease-in-out cursor-pointer text-center"
+          className="font-semibold text-xl text-[#857008d0] hover:text-gray-500 transition-all w-3/4 ease-in-out cursor-pointer text-center md:block hidden"
           onClick={() => setTeacherLogin(false)}
         >
           Are you a Student?
         </h3>
       </div>
-      <div className="w-3/4 flex flex-col justify-center items-center p-6">
+      <div className="md:w-3/4 w-full flex flex-col justify-center items-center p-6">
         {login ? (
           <form
             action=""
@@ -159,6 +159,12 @@ export const TeacherLogin = () => {
               className="w-full border-2 rounded-lg p-2 shadow-lg"
               onChange={(e) => setDOB(e.target.value)}
             />
+            <div
+              className="bg-[#e3c73ffe] text-white p-3 px-4 rounded-xl shadow-lg font-semibold hover:bg-[#e3c83faf] transition-all w-3/4 ease-in-out md:hidden block text-center cursor-pointer"
+              onClick={() => setTeacherLogin(false)}
+            >
+              I am a student
+            </div>
             <button className="bg-[#e3c73ffe] text-white p-3 px-4 rounded-xl shadow-lg font-semibold hover:bg-[#e3c83faf] transition-all w-3/4 ease-in-out">
               Register
             </button>

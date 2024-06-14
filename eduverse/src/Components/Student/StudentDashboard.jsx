@@ -37,6 +37,8 @@ export const StudentDashboard = () => {
   const [myCourses, setMyCourses] = useState([]);
   const [course, setCourse] = useState({});
   const [loading, setLoading] = useState(false);
+  const [viewWishlist, setViewWishlist] = useState(false);
+  const [phone, setPhone] = useState(false);
 
   const viewCourse = async (id) => {
     setCID(id);
@@ -131,6 +133,7 @@ export const StudentDashboard = () => {
     };
     getInfo();
     getMyCourses();
+    if (window.innerWidth <= 640) setViewWishlist(false);
   }, []);
 
   return (
@@ -143,50 +146,113 @@ export const StudentDashboard = () => {
       ) : CID ? (
         <CourseOverview course={course} />
       ) : (
-        <div className="h-full w-full flex gap-4 justify-center items-center p-6 px-16 mt-20">
-          {/* <button onClick={() => StudentLogout()}>LogOut</button> */}
-          {/* <button onClick={() => check()}>check</button> */}
-          <div className="h-full w-1/3 bg-[#FFE55B] rounded-2xl shadow-xl flex flex-col justify-center items-center gap-4">
+        <div className="h-full w-full flex md:flex-row flex-col gap-4 justify-center items-center p-6 md:px-16 mt-20">
+          <div className="md:h-full sm:h-1/2 h-1/3 md:w-1/3 w-full bg-[#FFE55B] rounded-2xl shadow-xl flex md:flex-col justify-center items-center md:gap-4 sm:gap-12 gap-8 md:p-0 p-4">
             <img
               src={img}
               alt=""
-              className="h-56 w-56 rounded-full shadow-xl mb-12"
+              className="sm:h-56 sm:w-56 h-32 w-32 rounded-full shadow-xl md:mb-12"
             />
             <div className="flex flex-col gap-4 justify-start items-start">
-              <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
-                <BsFillPersonFill className="text-2xl" /> {stud.name}
+              <div className="flex font-bold md:text-xl text-gray-600 justify-center items-center gap-4">
+                <BsFillPersonFill className="md:text-2xl" /> {stud.name}
               </div>
-              <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
+              <div className="flex font-bold text-gray-600 justify-center items-center gap-4">
                 <FaPhoneAlt /> {stud.phone}
               </div>
-              <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
+              <div className="flex font-bold text-gray-600 justify-center items-center gap-4">
                 <IoMail />
                 {stud.email}
               </div>
-              <div className="flex font-bold text-xl text-gray-600 justify-center items-center gap-4">
-                <MdLocationOn className="text-2xl" /> {stud.address}
+              <div className="flex font-bold text-gray-600 justify-center items-center gap-4">
+                <MdLocationOn className="md:text-2xl text-xl" /> {stud.address}
               </div>
             </div>
           </div>
-          <div className="h-full flex w-2/3 bg-[#ffe45b80] rounded-2xl shadow-xl gap-3 p-8">
-            <div className="w-1/2 flex flex-col h-full justify-center items-center">
+          <div className="md:h-full flex md:w-2/3 w-full bg-[#ffe45b80] rounded-2xl shadow-xl gap-3 md:p-8 p-4 overflow-auto md:overflow-hidden">
+            {viewWishlist ? (
+              <div className="w-full flex flex-col md:hidden h-full  justify-center items-center">
+                <div className="flex w-full font-bold text-xl text-gray-600 p-4">
+                  <h1 className="mr-auto">My Wishlist</h1>
+                  <button onClick={() => setViewWishlist(false)}>
+                    My courses
+                  </button>
+                </div>
+                <div className="md:overflow-auto flex flex-col w-full h-full gap-4 p-4">
+                  {stud.wishlist &&
+                    stud.wishlist.map((item) => (
+                      <div className="w-full flex p-4 sm:px-6  bg-white shadow-xl rounded-3xl">
+                        <h1 className="font-semibold">{item.cname}</h1>
+                        <div className="flex gap-3 justify-center items-center ml-auto">
+                          <button
+                            className=" font-bold sm:text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
+                            onClick={() => viewCourse(item.cid)}
+                          >
+                            <FaEye />
+                          </button>
+                          <button
+                            className="font-bold  text-red-600 hover:text-red-400 transition-all ease-in-out"
+                            onClick={() => removeFromWishlist(item.cid)}
+                          >
+                            <ImBin />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ) : (
+              <div className="w-full flex flex-col md:hidden h-full justify-center items-center">
+                <div className="flex w-full font-bold text-xl text-gray-600 p-4">
+                  <h1 className="mr-auto">Enrolled Courses</h1>
+                  <button onClick={() => setViewWishlist(true)}>
+                    View Wishlist
+                  </button>
+                </div>
+                <div className="md:overflow-auto flex flex-col w-full h-full gap-4 p-4">
+                  {myCourses &&
+                    myCourses.map((item) => (
+                      <div className="w-full flex sm:px-6 p-4 bg-white shadow-xl rounded-3xl">
+                        <h1 className="font-semibold">{item.cname}</h1>
+                        <div className="flex gap-3 justify-center items-center ml-auto">
+                          <button
+                            className=" font-bold sm:text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
+                            onClick={() => viewCourse(item._id)}
+                          >
+                            <FaEye />
+                          </button>
+                          <button
+                            className="font-bold sm:text-xl text-red-600 hover:text-red-400 transition-all ease-in-out"
+                            onClick={() => leaveCourse(item._id)}
+                          >
+                            <MdLogout />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+            <div className="w-1/2 md:flex hidden flex-col h-full justify-center items-center">
               <h1 className="font-bold text-xl text-gray-600">
                 Enrolled Courses
               </h1>
-              <div className="overflow-auto flex flex-col w-full h-full gap-4 p-4">
+
+              <div className="md:overflow-auto flex flex-col w-full h-full gap-4 p-4">
                 {myCourses &&
                   myCourses.map((item) => (
-                    <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+                    <div className="w-full flex sm:p-4 sm:px-6 p-2 bg-white shadow-xl rounded-3xl">
                       <h1 className="font-semibold">{item.cname}</h1>
                       <div className="flex gap-3 justify-center items-center ml-auto">
                         <button
-                          className=" font-bold text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
+                          className=" font-bold sm:text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
                           onClick={() => viewCourse(item._id)}
                         >
                           <FaEye />
                         </button>
                         <button
-                          className="font-bold text-xl text-red-600 hover:text-red-400 transition-all ease-in-out"
+                          className="font-bold sm:text-xl text-red-600 hover:text-red-400 transition-all ease-in-out"
                           onClick={() => leaveCourse(item._id)}
                         >
                           <MdLogout />
@@ -196,16 +262,16 @@ export const StudentDashboard = () => {
                   ))}
               </div>
             </div>
-            <div className="w-1/2 flex flex-col h-full  justify-center items-center">
+            <div className="w-1/2 md:flex hidden flex-col h-full  justify-center items-center">
               <h1 className="font-bold text-xl text-gray-600">My Wishlist</h1>
-              <div className="overflow-auto flex flex-col w-full h-full gap-4 p-4">
+              <div className="md:overflow-auto flex flex-col w-full h-full gap-4 p-4">
                 {stud.wishlist &&
                   stud.wishlist.map((item) => (
-                    <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+                    <div className="w-full flex sm:p-4 sm:px-6 p-2 bg-white shadow-xl rounded-3xl">
                       <h1 className="font-semibold">{item.cname}</h1>
                       <div className="flex gap-3 justify-center items-center ml-auto">
                         <button
-                          className=" font-bold text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
+                          className=" font-bold sm:text-xl text-[#0B5078] hover:text-[#0b50789e] transition-all ease-in-out"
                           onClick={() => viewCourse(item.cid)}
                         >
                           <FaEye />
