@@ -149,6 +149,7 @@ export const Explore = () => {
     };
     getTeachersInfo(user.token);
     getCoursesInfo(user.token);
+    setCourse(true);
   }, []);
 
   useEffect(() => {
@@ -206,32 +207,34 @@ export const Explore = () => {
       ) : TID && teacherData ? (
         <TeacherProfile teacher={teacherData} courses={coursesByTeacher} />
       ) : (
-        <div className="h-full w-full flex flex-col gap-4 items-center p-6 px-16 mt-20 overflow-auto">
-          <div className="flex w-full gap-4 justify-center items-center p-10">
-            {course ? (
-              <input
-                type="text"
-                placeholder="What do you want to learn?"
-                className="w-1/2 flex p-4 px-6 bg-white shadow-xl rounded-3xl border-2"
-                onChange={(e) => setSearchTopic(e.target.value)}
-              />
-            ) : (
-              <input
-                type="text"
-                placeholder="Name of the teacher"
-                className="w-1/2 flex p-4 px-6 bg-white shadow-xl rounded-3xl border-2"
-                onChange={(e) => setSearchTeacher(e.target.value)}
-              />
-            )}
+        <div className="h-full w-full flex flex-col gap-4 items-center p-6 md:px-16 mt-20 overflow-auto">
+          <div className="flex w-full md:gap-4 gap-2 justify-center items-center md:p-10 sm:p-4 p-0">
+            <div className="flex sm:flex-row flex-col w-full md:gap-4 gap-2 justify-center items-center">
+              {course ? (
+                <input
+                  type="text"
+                  placeholder="What do you want to learn?"
+                  className="sm:w-1/2 w-full flex p-2 sm:p-4 md:px-6 bg-white shadow-xl sm::rounded-3xl rounded-lg border-2"
+                  onChange={(e) => setSearchTopic(e.target.value)}
+                />
+              ) : (
+                <input
+                  type="text"
+                  placeholder="Name of the teacher"
+                  className="sm:w-1/2 w-full flex p-2 sm:p-4 md:px-6 bg-white shadow-xl sm:rounded-3xl rounded-lg border-2"
+                  onChange={(e) => setSearchTeacher(e.target.value)}
+                />
+              )}
 
-            <input
-              type="text"
-              placeholder="Search by Location"
-              className="w-1/2 flex p-4 px-6 bg-white shadow-xl rounded-3xl border-2"
-              onChange={(e) => setSearchLocation(e.target.value)}
-            />
+              <input
+                type="text"
+                placeholder="Search by Location"
+                className="sm:w-1/2 w-full flex p-2 sm:p-4 md:px-6 bg-white shadow-xl sm:rounded-3xl rounded-lg border-2"
+                onChange={(e) => setSearchLocation(e.target.value)}
+              />
+            </div>
             <button
-              className="w-1/8 flex p-4 bg-[#e3c73ffe] text-white shadow-xl rounded-full font-extrabold hover:bg-[#e3c83faf] transition-all ease-in-out text-xl"
+              className="sm:w-1/8 flex p-4 bg-[#e3c73ffe] text-white shadow-xl rounded-lg h-full sm:h-auto sm:rounded-full font-extrabold hover:bg-[#e3c83faf] transition-all ease-in-out text-xl justify-center items-center"
               onClick={() => (course ? searchCourses() : filterTeacher())}
             >
               <ImSearch />
@@ -240,7 +243,7 @@ export const Explore = () => {
             {/* <button onClick={() => check()}>Click me</button> */}
           </div>
           <button
-            className="w-1/6 flex p-4 bg-teal-600 text-white shadow-xl rounded-3xl font-bold hover:bg-teal-400 transition-all ease-in-out justify-center items-center mx-auto"
+            className="sm:w-1/6 w-full flex p-4 bg-teal-600 text-white shadow-xl sm:rounded-3xl rounded-lg font-bold hover:bg-teal-400 transition-all ease-in-out justify-center items-center mx-auto"
             onClick={() => setCourse(!course)}
           >
             {course ? "View Teachers" : "View Courses"}
@@ -252,11 +255,11 @@ export const Explore = () => {
               ) : ( */}
               <table class="table-fixed w-full border">
                 <thead className="text-cyan-800 font-bold">
-                  <tr>
+                  <tr className="break-words">
                     <th className="py-4 text-lg border-2 border-[#31869f]">
                       Course name
                     </th>
-                    <th className="py-4 text-lg border-2 border-[#31869f]">
+                    <th className="py-4 text-lg border-2 border-[#31869f] ">
                       Teacher name
                     </th>
                     <th className="py-4 text-lg border-2 border-[#31869f]">
@@ -274,23 +277,23 @@ export const Explore = () => {
                 <tbody>
                   {filteredCourse &&
                     filteredCourse.map((item) => (
-                      <tr className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0">
-                        <td className="py-2 border-2  bg-[#c4fdfd67] border-[#31869f] px-3">
+                      <tr className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0 break-words">
+                        <td className="py-2 border-2  bg-[#c4fdfd67] border-[#31869f] sm:px-3 px-1">
                           {item.cname}
                         </td>
-                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] px-3">
+                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] sm:px-3 px-1 ">
                           {item.teacher_name}
                         </td>
-                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] px-3">
+                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] sm:px-3 px-1  ">
                           {item.topic}
                         </td>
-                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] px-3">
+                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] sm:px-3 px-1">
                           {item.location}
                         </td>
-                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] px-3">
+                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] sm:px-3 px-1">
                           {calculateRating(item)}
                         </td>
-                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] px-3 font-bold text-blue-900 hover:text-cyan-600">
+                        <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] sm:px-3 px-1 font-bold text-blue-900 hover:text-cyan-600">
                           <button onClick={() => setCID(item._id)}>View</button>
                           {/* <button>Enroll</button> */}
                         </td>
@@ -307,7 +310,7 @@ export const Explore = () => {
               ) : ( */}
               <table class="table-fixed w-full text-center">
                 <thead className="text-cyan-800 font-bold">
-                  <tr>
+                  <tr className="break-words">
                     <th className="py-4 text-lg border-2 border-[#31869f]">
                       Name
                     </th>
@@ -326,7 +329,7 @@ export const Explore = () => {
                 <tbody>
                   {filteredTeachers &&
                     filteredTeachers.map((item) => (
-                      <tr className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0">
+                      <tr className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0 break-words">
                         <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] px-3">
                           {item.name}
                         </td>

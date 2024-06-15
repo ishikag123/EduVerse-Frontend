@@ -9,6 +9,9 @@ import {
 } from "../Services/api";
 import ReactStars from "react-rating-stars-component";
 import { IoSend } from "react-icons/io5";
+import { ImCross } from "react-icons/im";
+import { RiArrowDownDoubleFill } from "react-icons/ri";
+import { RiArrowUpDoubleFill } from "react-icons/ri";
 import { formatDate } from "../Services/utils";
 import { Enrollments } from "./Teacher/Enrollments";
 
@@ -27,6 +30,7 @@ export const CourseOverview = ({ course }) => {
   const [endDate, setEndDate] = useState("");
   const [enrollDate, setEnrollDate] = useState("");
   const [showEnrollment, setShowEnrollment] = useState(false);
+  const [viewComm, setViewComm] = useState(false);
 
   const enroll = async () => {
     const email = student.email;
@@ -47,20 +51,23 @@ export const CourseOverview = ({ course }) => {
 
   const submitComment = async (e) => {
     e.preventDefault();
-    const body = JSON.stringify({
-      cid: CID,
-      comment,
-    });
-    try {
-      const data = await courseComment(student.token, body);
-      if (data) {
-        //window.location.reload;
-        //alert("Comment added!!!");
-        setComments([...comments, comment]);
-        setComment("");
-      } else console.log("error commenting");
-    } catch (error) {
-      console.log(error);
+    if (comment !== "") {
+      const body = JSON.stringify({
+        cid: CID,
+        comment,
+      });
+      try {
+        const data = await courseComment(student.token, body);
+        if (data) {
+          //window.location.reload;
+          //alert("Comment added!!!");
+          setComments([...comments, comment]);
+          setViewComm(true);
+          setComment("");
+        } else console.log("error commenting");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -134,7 +141,7 @@ export const CourseOverview = ({ course }) => {
   };
 
   return (
-    <div className="h-full w-full flex gap-6 items-center p-6 px-16 mt-20">
+    <div className="h-full w-full flex md:flex-row flex-col gap-6 items-center md:p-6 md:px-16 p-3 mt-20">
       {course &&
         (showEnrollment ? (
           <Enrollments
@@ -144,7 +151,13 @@ export const CourseOverview = ({ course }) => {
           />
         ) : (
           <>
-            <div className="flex flex-col w-1/2 h-full p-6 gap-4">
+            <div className="flex flex-col md:w-1/2 w-full md:h-full md:p-6 p-2 gap-4">
+              <button
+                onClick={() => setCID("")}
+                className="md:hidden block ml-auto p-4 text-xl"
+              >
+                <ImCross />
+              </button>
               <iframe
                 src={`https://player.cloudinary.com/embed/?cloud_name=${cloudName}&public_id=${course.demo}`}
                 // width="640"
@@ -201,17 +214,42 @@ export const CourseOverview = ({ course }) => {
                 ) : (
                   <></>
                 )}
+                {!viewComm ? (
+                  <button
+                    onClick={() => setViewComm(true)}
+                    className="md:hidden flex p-3 rounded-2xl border-2 w-full shadow-lg justify-center items-center text-gray-500 font-semibold"
+                  >
+                    <h1 className="mr-auto">View all comments</h1>
+                    <RiArrowDownDoubleFill className="font-bold text-3xl" />
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => setViewComm(false)}
+                    className="md:hidden flex p-3 rounded-2xl border-2 w-full shadow-lg justify-center items-center text-gray-500 font-semibold"
+                  >
+                    <h1 className="mr-auto">Close Comments</h1>
+                    <RiArrowUpDoubleFill className="font-bold text-3xl" />
+                  </button>
+                )}
                 {comments &&
                   comments.map((item) => (
-                    <div className="w-full p-2 px-4 shadow-md border-2 rounded-xl">
+                    <div
+                      className={
+                        viewComm
+                          ? "w-full p-2 px-4 shadow-md border-2 rounded-xl"
+                          : "w-full p-2 px-4 shadow-md border-2 rounded-xl md:block hidden"
+                      }
+                    >
                       {item}
                     </div>
                   ))}
               </div>
             </div>
 
-            <div className="w-1/2 h-full flex flex-col gap-4">
-              <h1 className="font-bold text-2xl">Course Overview</h1>
+            <div className="md:w-1/2 w-full md:h-full flex flex-col gap-4 md:p-0 p-6 text-lg sm:text-base">
+              <h1 className="font-bold sm:text-2xl text-3xl">
+                Course Overview
+              </h1>
               <div className="flex flex-col ">
                 <h2>Course name: {course.cname}</h2>
                 <h2>Course topic: {course.topic}</h2>
@@ -269,7 +307,7 @@ export const CourseOverview = ({ course }) => {
                 )}
                 <button
                   onClick={() => setCID("")}
-                  className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75"
+                  className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75 md:block hidden"
                 >
                   Back
                 </button>

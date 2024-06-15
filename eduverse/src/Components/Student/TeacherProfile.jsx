@@ -50,15 +50,21 @@ export const TeacherProfile = ({ teacher, courses }) => {
   }, [teacher]);
 
   return (
-    <div className="h-full w-full flex gap-4 justify-center items-center p-6 px-16 mt-20">
-      <div className="h-full w-1/3 bg-[#0B5078] rounded-2xl shadow-xl flex flex-col justify-center items-center gap-4">
+    <div className="h-full w-full flex md:flex-row flex-col gap-4 sm:justify-center sm:items-center p-6 md:px-16 mt-20">
+      <button
+        onClick={() => setTID("")}
+        className="md:hidden block ml-auto p-2"
+      >
+        <ImCross />
+      </button>
+      <div className="md:h-full sm:h-1/2 h-1/3 md:w-1/3 w-full bg-[#0B5078] rounded-2xl shadow-xl flex md:flex-col justify-center items-center md:gap-4 sm:gap-12 gap-6 md:p-0 p-4 py-8">
         <img
           src={img}
           alt=""
-          className="h-56 w-56 rounded-full shadow-xl mb-12"
+          className="sm:h-56 sm:w-56 h-32 w-32 rounded-full shadow-xl md:mb-12"
         />
-        <div className="flex flex-col gap-4 justify-start items-start">
-          <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
+        <div className="flex flex-col sm:gap-4 gap-2 justify-start items-start sm:p-0 py-8">
+          <div className="flex font-bold md:text-xl text-white justify-center items-center gap-4">
             <BsFillPersonFill className="text-2xl" /> {teacher.name}
           </div>
           <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
@@ -79,18 +85,18 @@ export const TeacherProfile = ({ teacher, courses }) => {
           </div>
         </div>
       </div>
-      <div className="h-full flex flex-col w-2/3 bg-[#CDE6F5] rounded-2xl shadow-xl gap-4 p-8">
+      <div className="md:h-full flex flex-col md:w-2/3 w-full bg-[#CDE6F5] rounded-2xl shadow-xl gap-3 md:p-8 p-4 overflow-auto md:overflow-hidden">
         <div className="flex">
           <h1 className="font-bold text-xl mr-auto">Active Courses</h1>
-          <button onClick={() => setTID("")}>
+          <button onClick={() => setTID("")} className="md:block hidden">
             <ImCross />
           </button>
         </div>
 
-        <div className="overflow-auto flex flex-col w-full h-full gap-4 p-4">
+        <div className="overflow-auto flex md:flex-col flex-col-reverse w-full h-full gap-4 sm:p-4 p-2">
           {courses &&
             courses.map((item) => (
-              <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+              <div className="w-full flex p-4 px-6 bg-white shadow-xl sm:rounded-3xl rounded-xl ">
                 <h1 className="font-semibold">{item.cname}</h1>
                 <div className="flex gap-4 ml-auto">
                   <button
@@ -113,7 +119,7 @@ export const TeacherProfile = ({ teacher, courses }) => {
               count={5}
               onChange={ratingChanged}
               size={32}
-              activeColor="#ffd700"
+              activeColor="#e0c944"
             />
           </div>
         </div>
