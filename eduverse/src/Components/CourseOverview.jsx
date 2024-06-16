@@ -32,6 +32,15 @@ export const CourseOverview = ({ course }) => {
   const [showEnrollment, setShowEnrollment] = useState(false);
   const [viewComm, setViewComm] = useState(false);
 
+  const handleViewEnrollment = (course) => {
+    if (course.joined_students && course.joined_students.length !== 0) {
+      setShowEnrollment(true);
+    } else {
+      setShowEnrollment(false);
+      alert("No enrollments to show!!!");
+    }
+  };
+
   const enroll = async () => {
     const email = student.email;
     const cid = CID;
@@ -276,17 +285,17 @@ export const CourseOverview = ({ course }) => {
               <div className="w-full flex gap-4">
                 {!studCourse ? (
                   <>
-                    <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                    {/* <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
                       Edit
-                    </button>
+                    </button> */}
                     {/* <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
                     End Course
                   </button> */}
                     <button
-                      className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75"
-                      onClick={() => setShowEnrollment(true)}
+                      className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl sm:w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75"
+                      onClick={() => handleViewEnrollment(course)}
                     >
-                      Enrollments
+                      View Enrollments
                     </button>
                   </>
                 ) : (

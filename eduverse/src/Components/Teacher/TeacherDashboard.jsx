@@ -148,35 +148,36 @@ export const TeacherDashboard = () => {
           <CourseOverview course={course} />
         )
       ) : (
-        <div className="h-full w-full flex gap-4 justify-center items-center p-6 px-16 mt-20">
-          <div className="h-full w-1/3 bg-[#0B5078] rounded-2xl shadow-xl flex flex-col justify-center items-center gap-4">
+        <div className="h-full w-full flex md:flex-row flex-col gap-4 sm:justify-center sm:items-center sm:p-6 p-2 md:px-16 mt-20">
+          <div className="md:h-full sm:h-1/2 h-1/3 md:w-1/3 w-full bg-[#0B5078] rounded-2xl shadow-xl flex md:flex-col justify-center items-center md:gap-4 sm:gap-12 gap-4 md:p-0 p-4">
             <img
               src={img}
               alt=""
-              className="h-56 w-56 rounded-full shadow-xl mb-4"
+              className="sm:h-56 sm:w-56 h-28 w-28 rounded-full shadow-xl md:mb-12"
             />
-            <div className="flex flex-col gap-4 justify-start items-start">
-              <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
-                <BsFillPersonFill className="text-2xl" /> {teacherData.name}
+            <div className="flex flex-col sm:gap-4 gap-1 justify-start items-start sm:p-0 py-8">
+              <div className="flex font-bold sm:text-xl text-white justify-center items-center gap-4">
+                <BsFillPersonFill className="sm:text-2xl text-xl" />{" "}
+                {teacherData.name}
               </div>
-              <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
+              <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">
                 <FaPhoneAlt /> {teacherData.phone}
               </div>
-              <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
+              <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">
                 <IoMail />
                 {teacherData.email}
               </div>
-              <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
+              <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">
                 <MdLocationOn className="text-2xl text-left" />
                 {teacherData.address}
               </div>
-              <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
+              <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">
                 <FaGraduationCap /> {teacherData.skills}
               </div>
-              <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
+              <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">
                 <FaStarHalfAlt /> {avgRating}
               </div>
-              <div className="flex font-semibold text-lg text-white justify-center items-center gap-4">
+              <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">
                 <h1>
                   {teacherData.experience ? teacherData.experience : 0} years of
                   experience
@@ -184,15 +185,15 @@ export const TeacherDashboard = () => {
               </div>
             </div>
           </div>
-          <div className="h-full flex flex-col w-2/3 bg-[#CDE6F5] rounded-2xl shadow-xl gap-4 p-8 overflow-auto">
+          <div className="md:h-full flex flex-col md:w-2/3 w-full bg-[#CDE6F5] rounded-2xl shadow-xl gap-3 md:p-8 sm:p-6 p-4 overflow-auto">
             <div>
               <h1 className="font-bold text-xl mr-auto">Active Courses</h1>
-              <div className=" flex flex-col w-full h-full gap-4 p-4">
+              <div className="flex flex-col w-full h-full gap-4 sm:p-4 p-2">
                 {categorizedCourses.active &&
                   categorizedCourses.active.map(
                     (item) => (
                       //   checkActive(item.endDate) ? (
-                      <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+                      <div className="w-full flex p-4 sm:px-6 bg-white shadow-xl sm:rounded-3xl rounded-xl">
                         <h1 className="font-semibold">{item.cname}</h1>
                         <div className="flex gap-4 ml-auto">
                           <button
@@ -222,12 +223,12 @@ export const TeacherDashboard = () => {
             </div>
             <div>
               <h1 className="font-bold text-xl mr-auto">Upcoming Courses</h1>
-              <div className=" flex flex-col w-full h-full gap-4 p-4">
+              <div className=" flex flex-col w-full h-full gap-4 sm:p-4 p-2">
                 {categorizedCourses.upcoming &&
                   categorizedCourses.upcoming.map(
                     (item) => (
                       //   checkActive(item.endDate) ? (
-                      <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+                      <div className="w-full flex p-4 sm:px-6 bg-white shadow-xl sm:rounded-3xl rounded-xl">
                         <h1 className="font-semibold">{item.cname}</h1>
                         <div className="flex gap-4 ml-auto">
                           <button
@@ -257,12 +258,12 @@ export const TeacherDashboard = () => {
             </div>
             <div>
               <h1 className="font-bold text-xl mr-auto">Inactive Courses</h1>
-              <div className=" flex flex-col w-full h-full gap-4 p-4">
+              <div className=" flex flex-col w-full h-full gap-4 sm:p-4 p-2">
                 {categorizedCourses.inactive &&
                   categorizedCourses.inactive.map(
                     (item) => (
                       //   checkActive(item.endDate) ? (
-                      <div className="w-full flex p-4 px-6 bg-white shadow-xl rounded-3xl">
+                      <div className="w-full flex p-4 sm:px-6 bg-white shadow-xl sm:rounded-3xl rounded-xl">
                         <h1 className="font-semibold">{item.cname}</h1>
                         <div className="flex gap-4 ml-auto">
                           <button

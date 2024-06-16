@@ -73,17 +73,17 @@ export const CreateCourse = () => {
     //console.log(teacher);
   }, []);
 
-  useEffect(() => {
-    console.log(video);
-  }, [video]);
+  // useEffect(() => {
+  //   console.log(video);
+  // }, [video]);
 
   return (
     <div className="h-screen w-full flex flex-col">
       <TeacherNav />
-      <div className="h-full w-full flex gap-4 justify-center items-center p-6 px-16 mt-20">
+      <div className="h-full w-full flex gap-4 justify-center items-center p-6 md:px-16 mt-20">
         <div className="border-black border-2 shadow-xl w-full h-full rounded-2xl flex flex-col gap-2 justify-center items-center p-4 overflow-auto">
           <form
-            className="flex w-full justify-center items-center p-4 rounded-xl bg-slate-100 gap-4"
+            className="flex w-full justify-center items-center p-4 rounded-xl bg-slate-100 gap-4 md:mt-0 mt-20"
             onSubmit={uploadDemoVideo}
           >
             <label
@@ -104,8 +104,11 @@ export const CreateCourse = () => {
               Upload
             </button>
           </form>
-          <form onSubmit={handleSubmit} className="w-full h-full flex gap-4 ">
-            <div className="flex flex-col gap-4 justify-center items-center w-1/2 h-full">
+          <form
+            onSubmit={handleSubmit}
+            className="w-full h-full flex md:flex-row flex-col gap-4"
+          >
+            <div className="flex flex-col gap-4 justify-center items-center md:w-1/2 w-full h-full">
               <input
                 type="text"
                 placeholder="Course Title"
@@ -158,9 +161,9 @@ export const CreateCourse = () => {
                 onChange={(e) => setLocation(e.target.value)}
               />
             </div>
-            <div className="flex flex-col gap-3 justify-center items-center w-1/2 h-full">
+            <div className="flex flex-col gap-3 justify-center items-center md:w-1/2 w-full h-full">
               <label className="flex w-full gap-2 justify-center items-center pl-2">
-                Start Date :
+                Start Date
                 <input
                   type="date"
                   placeholder="Start date"
@@ -171,7 +174,7 @@ export const CreateCourse = () => {
                 />
               </label>
               <label className="flex w-full gap-2 justify-center items-center pl-2">
-                End Date :
+                End Date
                 <input
                   type="date"
                   placeholder="End date"
@@ -181,7 +184,7 @@ export const CreateCourse = () => {
                 />
               </label>
               <label className="flex w-full gap-2 justify-center items-center pl-2">
-                Enrollment ends:
+                Enrollment ends
                 <input
                   type="date"
                   placeholder="Enrollment ends on"
@@ -218,8 +221,8 @@ export const CreateCourse = () => {
               <button
                 className={
                   demo
-                    ? "bg-[#fee046] hover:bg-[#fdefa8] rounded-2xl shadow-xl p-3 font-semibold transition-all ease-in delay-75 w-full"
-                    : "bg-[#bdbbb0] text-gray-500 rounded-2xl shadow-xl p-3 font-semibold w-full cursor-default"
+                    ? "bg-[#fee046] hover:bg-[#fdefa8] rounded-2xl shadow-xl p-3 font-semibold transition-all ease-in delay-75 w-full md:mb-0 mb-6"
+                    : "bg-[#bdbbb0] text-gray-500 rounded-2xl shadow-xl p-3 font-semibold w-full cursor-default md:mb-0 mb-6"
                 }
               >
                 Create

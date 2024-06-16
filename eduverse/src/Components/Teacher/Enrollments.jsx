@@ -21,6 +21,7 @@ export const Enrollments = ({ enrollments, setShowEnrollment, cname }) => {
             return data;
           } catch (error) {
             console.log(error);
+            setLoading(false);
             return null;
           }
         })
@@ -41,7 +42,7 @@ export const Enrollments = ({ enrollments, setShowEnrollment, cname }) => {
     </div>
   ) : (
     <div className="w-full flex flex-col gap-4 mb-auto">
-      <div className="w-full flex gap-4 text-2xl font-bold justify-center items-center text-cyan-700">
+      <div className="w-full flex md:gap-4 gap-1 sm:text-2xl text-xl font-bold justify-center items-center text-cyan-700">
         <h1>Enrolled students in</h1>
         <h1>{cname}</h1>
         <button
@@ -51,7 +52,7 @@ export const Enrollments = ({ enrollments, setShowEnrollment, cname }) => {
           <ImCross />
         </button>
       </div>
-      <table class="table-fixed w-full border">
+      <table class="table-fixed w-full border break-words sm:text-base text-sm">
         <thead className="text-cyan-800 font-bold">
           <tr>
             <th className="py-4 text-lg border-2 border-[#31869f]">
