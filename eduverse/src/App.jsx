@@ -15,9 +15,11 @@ import { setAuthToken } from "./Services/utils";
 import { Explore } from "./Components/Student/Explore";
 import { TeacherDashboard } from "./Components/Teacher/TeacherDashboard";
 import { CreateCourse } from "./Components/Teacher/CreateCourse";
+import { EditStudentProfile } from "./Components/Student/EditStudentProfile";
+import { EditTeacherProfile } from "./Components/Teacher/EditTeacherProfile";
 
 function App() {
-  const { student, stoken, setSToken, setSMail, teacher } =
+  const { student, stoken, setSToken, setSMail, teacher, studInfo } =
     useContext(AccountContext);
   // useEffect(() => {
   //   const student = JSON.parse(localStorage.getItem("studentToken"));
@@ -49,12 +51,26 @@ function App() {
             element={student ? <Explore /> : <Navigate to="/" />}
           />
           <Route
+            path="/edit-student-profile"
+            element={
+              student ? <EditStudentProfile /> : <Navigate to="/" />
+              // <EditStudentProfile />
+            }
+          />
+          <Route
             path="/teacher-dashboard"
             element={teacher ? <TeacherDashboard /> : <Navigate to="/" />}
           />
           <Route
             path="/create-course"
             element={teacher ? <CreateCourse /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/edit-teacher-profile"
+            element={
+              teacher ? <EditTeacherProfile /> : <Navigate to="/" />
+              // <EditStudentProfile />
+            }
           />
         </Routes>
       </Router>

@@ -214,7 +214,7 @@ export const Explore = () => {
                 <input
                   type="text"
                   placeholder="What do you want to learn?"
-                  className="sm:w-1/2 w-full flex p-2 sm:p-4 md:px-6 bg-white shadow-xl sm::rounded-3xl rounded-lg border-2"
+                  className="sm:w-1/2 w-full flex p-2 sm:p-4 md:px-6 bg-white shadow-xl sm:rounded-3xl rounded-lg border-2"
                   onChange={(e) => setSearchTopic(e.target.value)}
                 />
               ) : (
@@ -277,7 +277,10 @@ export const Explore = () => {
                 <tbody>
                   {filteredCourse &&
                     filteredCourse.map((item) => (
-                      <tr className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0 break-words">
+                      <tr
+                        className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0 break-words"
+                        onClick={() => setCID(item._id)}
+                      >
                         <td className="py-2 border-2  bg-[#c4fdfd67] border-[#31869f] sm:px-3 px-1">
                           {item.cname}
                         </td>
@@ -329,7 +332,10 @@ export const Explore = () => {
                 <tbody>
                   {filteredTeachers &&
                     filteredTeachers.map((item) => (
-                      <tr className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0 break-words">
+                      <tr
+                        className="hover:bg-slate-400 cursor-pointer transition-all ease-in delay-0 break-words"
+                        onClick={() => viewTeacher(item.email)}
+                      >
                         <td className="py-2  bg-[#c4fdfd67] border-2 border-[#31869f] px-3">
                           {item.name}
                         </td>

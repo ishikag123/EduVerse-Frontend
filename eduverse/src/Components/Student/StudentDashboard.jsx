@@ -32,6 +32,7 @@ export const StudentDashboard = () => {
     setCID,
     setTeacher,
     setStudCourse,
+    setTID,
   } = useContext(AccountContext);
   const [stud, setStud] = useState({});
   const [myCourses, setMyCourses] = useState([]);
@@ -100,6 +101,7 @@ export const StudentDashboard = () => {
   };
 
   useEffect(() => {
+    setTID("");
     setCID("");
     const user = getStudentToken();
     setStudent(user);
@@ -149,9 +151,9 @@ export const StudentDashboard = () => {
         <div className="h-full w-full flex md:flex-row flex-col gap-4 justify-center items-center sm:p-6 p-2 md:px-16 mt-20">
           <div className="md:h-full sm:h-1/2 h-1/3 md:w-1/3 w-full bg-[#FFE55B] rounded-2xl shadow-xl flex md:flex-col justify-center items-center md:gap-4 sm:gap-12 gap-8 md:p-0 p-4">
             <img
-              src={img}
+              src={stud.dp ? stud.dp : img}
               alt=""
-              className="sm:h-56 sm:w-56 h-28 w-28 rounded-full shadow-xl md:mb-12"
+              className="sm:h-56 sm:w-56 h-36 w-36 sm:rounded-full rounded-xl shadow-xl md:mb-12"
             />
             <div className="flex flex-col gap-4 justify-start items-start sm:text-xl">
               <div className="flex font-bold sm:text-xl text-gray-600 justify-center items-center gap-4">

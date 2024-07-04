@@ -139,23 +139,21 @@ export const TeacherDashboard = () => {
     <div className="h-screen w-full flex flex-col">
       <TeacherNav />
 
-      {CID ? (
-        loading ? (
-          <div className="h-full w-full flex items-center justify-center p-6 px-16 mt-20">
-            <Triangle visible={true} height="80" width="80" color="#31869f" />
-          </div>
-        ) : (
-          <CourseOverview course={course} />
-        )
+      {loading ? (
+        <div className="h-full w-full flex items-center justify-center p-6 px-16 mt-20">
+          <Triangle visible={true} height="80" width="80" color="#31869f" />
+        </div>
+      ) : CID ? (
+        <CourseOverview course={course} />
       ) : (
         <div className="h-full w-full flex md:flex-row flex-col gap-4 sm:justify-center sm:items-center sm:p-6 p-2 md:px-16 mt-20">
           <div className="md:h-full sm:h-1/2 h-1/3 md:w-1/3 w-full bg-[#0B5078] rounded-2xl shadow-xl flex md:flex-col justify-center items-center md:gap-4 sm:gap-12 gap-4 md:p-0 p-4">
             <img
-              src={img}
+              src={teacherData.dp ? teacherData.dp : img}
               alt=""
-              className="sm:h-56 sm:w-56 h-28 w-28 rounded-full shadow-xl md:mb-12"
+              className="sm:h-56 sm:w-56 h-36 w-36 sm:rounded-full rounded-xl shadow-xl md:mb-6"
             />
-            <div className="flex flex-col sm:gap-4 gap-1 justify-start items-start sm:p-0 py-8">
+            <div className="flex flex-col sm:gap-4 gap-1 justify-start items-start sm:p-0 py-8 overflow-x-auto">
               <div className="flex font-bold sm:text-xl text-white justify-center items-center gap-4">
                 <BsFillPersonFill className="sm:text-2xl text-xl" />{" "}
                 {teacherData.name}
@@ -168,7 +166,7 @@ export const TeacherDashboard = () => {
                 {teacherData.email}
               </div>
               <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">
-                <MdLocationOn className="text-2xl text-left" />
+                <MdLocationOn className="text-xl text-left" />
                 {teacherData.address}
               </div>
               <div className="flex font-semibold sm:text-lg text-white justify-center items-center gap-4">

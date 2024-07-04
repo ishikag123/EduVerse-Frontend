@@ -308,6 +308,25 @@ export const removeCourseFromWishlist = async (token, data) => {
   }
 };
 
+export const editStudent = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/student/edit`, data, config);
+    if (res.status === 200) {
+      alert("Profile updated!!");
+    }
+    return res.data;
+    //localStorage.setItem("studentToken", res.data.token);
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};
+
 //////////////////////////TEACHER/////////////////////////////////
 
 export const teacherRegister = async (data) => {
@@ -392,20 +411,22 @@ export const createCourse = async (data, token) => {
     console.log(err.response.data);
   }
 };
-
-export const uploadVideo = async (data) => {
-  // const data = {};
-  // data.append("file", video);
-  // data.append("upload_preset", "EduVerse_Preset");
+export const editTeacher = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
   try {
-    let resourceType = "video";
-    let api = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
-    const res = await axios.post(api, data);
-    const { public_id } = res.data;
-    console.log(public_id);
-    return public_id;
+    const res = await axios.put(`${port}/teacher/edit`, data, config);
+    if (res.status === 200) {
+      alert("Profile updated!!");
+    }
+    return res.data;
+    //localStorage.setItem("studentToken", res.data.token);
   } catch (error) {
-    console.log(error);
+    console.log(err.response.data);
   }
 };
 
@@ -423,5 +444,38 @@ export const getEnrolledStudent = async (mail, token) => {
     return res.data;
   } catch (error) {
     console.log(err.response.data);
+  }
+};
+
+export const uploadVideo = async (data) => {
+  // const data = {};
+  // data.append("file", video);
+  // data.append("upload_preset", "EduVerse_Preset");
+  try {
+    let resourceType = "video";
+    let api = `https://api.cloudinary.com/v1_1/${cloudName}/${resourceType}/upload`;
+    const res = await axios.post(api, data);
+    const { public_id } = res.data;
+    console.log(public_id);
+    return public_id;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const uploadDP = async (data) => {
+  // const data = {};
+  // data.append("file", video);
+  // data.append("upload_preset", "EduVerse_Preset");
+  try {
+    //let resourceType = "image";
+    console.log(data);
+    let api = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+    const res = await axios.post(api, data);
+
+    //console.log(res.data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };

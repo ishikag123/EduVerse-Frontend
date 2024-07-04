@@ -39,9 +39,9 @@ export const TeacherNav = () => {
         }
       >
         <Link to="/teacher-dashboard">Dashboard</Link>
+        <Link to="/edit-teacher-profile">Edit Profile</Link>
         <Link to="/create-course">Create Course</Link>
-        {/* <Link to="/wishlist">Wishlist</Link>
-        <Link to="/fees-pay">Pay fees</Link> */}
+
         <h1 className="cursor-pointer" onClick={() => TeacherLogout()}>
           Logout
         </h1>

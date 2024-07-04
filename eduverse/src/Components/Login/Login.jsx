@@ -191,12 +191,15 @@ export const Login = () => {
                   className="w-full border-2 rounded-lg p-2 shadow-lg"
                   onChange={(e) => setAddress(e.target.value)}
                 />
-                <input
-                  type="date"
-                  placeholder="Your Birthdate"
-                  className="w-full border-2 rounded-lg p-2 shadow-lg"
-                  onChange={(e) => setDOB(e.target.value)}
-                />
+                <div className="w-full flex flex-col gap-0 justify-center items-center">
+                  <h3 className="mr-auto text-xs text-gray-400">Birth Date</h3>
+                  <input
+                    type="date"
+                    required="true"
+                    className="w-full border-2 rounded-lg p-2 shadow-lg"
+                    onChange={(e) => setDOB(e.target.value)}
+                  />
+                </div>
                 <input
                   type="text"
                   placeholder="Guardian's Name"

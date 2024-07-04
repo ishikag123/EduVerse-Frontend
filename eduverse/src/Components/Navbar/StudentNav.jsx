@@ -37,11 +37,12 @@ export const StudentNav = () => {
         className={
           openMenu
             ? "gap-16 text-xl font-bold text-[#0B5078] justify-center items-center flex flex-col"
-            : "gap-16 ml-auto text-xl font-bold text-[#0B5078] justify-center items-center md:flex hidden"
+            : "gap-16 ml-auto text-xl font-bold text-[#0B5078] justify-end items-end md:flex hidden w-full"
         }
       >
         <Link to="/student-dashboard">Dashboard</Link>
         <Link to="/explore">Explore</Link>
+        <Link to="/edit-student-profile">Edit Profile</Link>
         {/* <Link to="/wishlist">Wishlist</Link>
         <Link to="/fees-pay">Pay fees</Link> */}
         <h1 className="cursor-pointer" onClick={() => StudentLogout()}>

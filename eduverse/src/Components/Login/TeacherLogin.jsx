@@ -153,9 +153,15 @@ export const TeacherLogin = () => {
               className="w-full border-2 rounded-lg p-2 shadow-lg"
               onChange={(e) => setExperience(e.target.value)}
             />
+            <label
+              htmlFor="DOB"
+              className="mr-auto px-1 py-0 font-semibold text-sm text-gray-400"
+            >
+              Birth Date:
+            </label>
             <input
               type="date"
-              placeholder="Birth Date"
+              id="DOB"
               className="w-full border-2 rounded-lg p-2 shadow-lg"
               onChange={(e) => setDOB(e.target.value)}
             />
