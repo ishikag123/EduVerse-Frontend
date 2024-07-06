@@ -12,6 +12,7 @@ export const AccountProvider = ({ children }) => {
   const [viewTeacher, setViewTeacher] = useState("");
   const [studCourse, setStudCourse] = useState(false);
   const [CID, setCID] = useState("");
+  const [editCID, setEditCID] = useState("");
   const [TID, setTID] = useState("");
 
   return (
@@ -35,6 +36,8 @@ export const AccountProvider = ({ children }) => {
         setCID,
         TID,
         setTID,
+        editCID,
+        setEditCID,
       }}
     >
       {children}

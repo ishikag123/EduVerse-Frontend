@@ -6,7 +6,7 @@ import { AccountContext } from "../../Context/AccountProvider";
 import { TeacherNav } from "../Navbar/TeacherNav";
 import { editTeacher, getTeacher, uploadDP } from "../../Services/api";
 import { IoMdPerson } from "react-icons/io";
-import { SiGmail } from "react-icons/si";
+// import { SiGmail } from "react-icons/si";
 import { FaPhone } from "react-icons/fa6";
 import { FaCakeCandles } from "react-icons/fa6";
 import { IoLocationSharp } from "react-icons/io5";
@@ -79,8 +79,8 @@ export const EditTeacherProfile = () => {
       experience,
       dp,
     });
-    console.log(body);
-    console.log(teacher.token);
+    // console.log(body);
+    // console.log(teacher.token);
     try {
       const newStud = await editTeacher(teacher.token, body);
       //console.log(newStud);

@@ -43,8 +43,8 @@ export const Enrollments = ({ enrollments, setShowEnrollment, cname }) => {
   ) : (
     <div className="w-full flex flex-col gap-4 mb-auto">
       <div className="w-full flex md:gap-4 gap-1 sm:text-2xl text-xl font-bold justify-center items-center text-cyan-700">
-        <h1>Enrolled students in</h1>
-        <h1>{cname}</h1>
+        <h1>Enrolled students in {cname}</h1>
+        {/* <h1></h1> */}
         <button
           onClick={() => setShowEnrollment(false)}
           className="ml-auto p-8"

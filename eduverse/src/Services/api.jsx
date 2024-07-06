@@ -1,9 +1,15 @@
 import React from "react";
 import axios from "axios";
+import CryptoJS from "crypto-js";
 
 const port = import.meta.env.VITE_SERVER;
 const video_url = import.meta.env.VITE_CLOUDINARY_URL;
 const cloudName = import.meta.env.VITE_CLOUDNAME;
+
+const generateSignature = (publicId, timestamp, apiSecret) => {
+  const stringToSign = `public_id=${publicId}&timestamp=${timestamp}${apiSecret}`;
+  return CryptoJS.SHA1(stringToSign).toString(CryptoJS.enc.Hex);
+};
 
 export const studentRegister = async (data) => {
   const config = {
@@ -411,6 +417,7 @@ export const createCourse = async (data, token) => {
     console.log(err.response.data);
   }
 };
+
 export const editTeacher = async (token, data) => {
   const config = {
     headers: {
@@ -424,7 +431,24 @@ export const editTeacher = async (token, data) => {
       alert("Profile updated!!");
     }
     return res.data;
-    //localStorage.setItem("studentToken", res.data.token);
+  } catch (error) {
+    console.log(err.response.data);
+  }
+};
+
+export const editCourse = async (token, data) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  try {
+    const res = await axios.put(`${port}/teacher/edit-course`, data, config);
+    if (res.status === 200) {
+      alert("Course updated!!");
+    }
+    return res.data;
   } catch (error) {
     console.log(err.response.data);
   }

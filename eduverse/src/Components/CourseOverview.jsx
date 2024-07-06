@@ -14,6 +14,7 @@ import { RiArrowDownDoubleFill } from "react-icons/ri";
 import { RiArrowUpDoubleFill } from "react-icons/ri";
 import { formatDate } from "../Services/utils";
 import { Enrollments } from "./Teacher/Enrollments";
+import { EditCourse } from "./Teacher/EditCourse";
 
 const cloudName = import.meta.env.VITE_CLOUDNAME;
 
@@ -31,6 +32,7 @@ export const CourseOverview = ({ course }) => {
   const [enrollDate, setEnrollDate] = useState("");
   const [showEnrollment, setShowEnrollment] = useState(false);
   const [viewComm, setViewComm] = useState(false);
+  const [editCourse, setEditCourse] = useState(false);
 
   const handleViewEnrollment = (course) => {
     if (course.joined_students && course.joined_students.length !== 0) {
@@ -158,6 +160,8 @@ export const CourseOverview = ({ course }) => {
             setShowEnrollment={setShowEnrollment}
             cname={course.cname}
           />
+        ) : editCourse ? (
+          <EditCourse setEditCourse={setEditCourse} course={course} />
         ) : (
           <>
             <div className="flex flex-col md:w-1/2 w-full md:h-full md:p-6 p-2 gap-4">
@@ -285,9 +289,12 @@ export const CourseOverview = ({ course }) => {
               <div className="w-full flex gap-4">
                 {!studCourse ? (
                   <>
-                    {/* <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
+                    <button
+                      className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75"
+                      onClick={() => setEditCourse(true)}
+                    >
                       Edit
-                    </button> */}
+                    </button>
                     {/* <button className="p-2 bg-[#f4d84c] text-white font-semibold shadow-xl w-1/3 rounded-2xl hover:bg-[#ffe45baa] transition-all ease-in delay-75">
                     End Course
                   </button> */}
