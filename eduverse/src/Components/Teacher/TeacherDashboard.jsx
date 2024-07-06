@@ -154,7 +154,7 @@ export const TeacherDashboard = () => {
               className="sm:h-56 sm:w-56 h-36 w-36 sm:rounded-full rounded-xl shadow-xl md:mb-6"
             />
             <div className="flex flex-col sm:gap-4 gap-1 justify-start items-start sm:p-0 py-8 overflow-x-auto">
-              <div className="flex font-bold sm:text-xl text-white justify-center items-center gap-4">
+              <div className="flex font-semibold sm:text-xl text-white justify-center items-center gap-4">
                 <BsFillPersonFill className="sm:text-2xl text-xl" />{" "}
                 {teacherData.name}
               </div>

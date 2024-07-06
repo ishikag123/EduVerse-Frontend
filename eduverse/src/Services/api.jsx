@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import CryptoJS from "crypto-js";
 
 const port = import.meta.env.VITE_SERVER;
 const video_url = import.meta.env.VITE_CLOUDINARY_URL;
